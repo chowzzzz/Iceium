@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogViewStaff" widgetVar="dialogViewStaff" header="View Staff" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formViewStaff">
+
+                <p:panelGrid style="float: left; width: 30em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column ></p:column>
+                        <p:column></p:column>
+                        <p:column rowspan="7">
+                            <p:graphicImage library="images" name="user.png" />                    
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel style="width: 7em;" for="staffId" styleClass="detailHeader" value="ID"/></p:column>
+                        <p:column><h:outputText style="width: 10em;" id="staffId" styleClass="detailContent" value="#{viewStaffManagedBean.staffEntityToView.staffId}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="firstName" styleClass="detailHeader" value="First Name"/></p:column>
+                        <p:column><h:outputText id="firstName" styleClass="detailContent" value="#{viewStaffManagedBean.staffEntityToView.firstName}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="lastName" styleClass="detailHeader" value="Last Name"/></p:column>
+                        <p:column><h:outputText id="lastName" styleClass="detailContent" value="#{viewStaffManagedBean.staffEntityToView.lastName}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="accessRight" styleClass="detailHeader" value="Access Right"/></p:column>
+                        <p:column><h:outputText id="accessRight" styleClass="detailContent" value="#{viewStaffManagedBean.staffEntityToView.accessRightEnum.printName}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="username" styleClass="detailHeader" value="Username"/></p:column>
+                        <p:column><h:outputText id="username" styleClass="detailContent" value="#{viewStaffManagedBean.staffEntityToView.username}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="password" styleClass="detailHeader" value="Password"/></p:column>
+                        <p:column><h:outputText id="password" styleClass="detailContent" value="•••••••••" /></p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

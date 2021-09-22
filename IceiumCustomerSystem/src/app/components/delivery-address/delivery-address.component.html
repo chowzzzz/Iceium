@@ -1,0 +1,81 @@
+<p-toast position="top-right"></p-toast>
+<div class="stepsdemo-content">
+    <form
+        #deliveryAddressForm="ngForm"
+        (ngSubmit)="nextPage(deliveryAddressForm)"
+    >
+        <p-card>
+            <ng-template pTemplate="title"> Delivery Address </ng-template>
+            <ng-template pTemplate="subtitle">
+                Enter your delivery address
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="p-fluid">
+                    <div class="p-field">
+                        <label for="addressTxt">Address</label>
+                        <input
+                            #addressTxt="ngModel"
+                            id="addressTxt"
+                            name="addressTxt"
+                            type="text"
+                            maxlength="256"
+                            [(ngModel)]="deliveryAddress.address"
+                            required
+                            pInputText
+                        />
+                        <small
+                            *ngIf="
+                                addressTxt.invalid &&
+                                (addressTxt.dirty ||
+                                    addressTxt.touched ||
+                                    submitted)
+                            "
+                            class="p-error"
+                            >Address is required.</small
+                        >
+                    </div>
+
+                    <div class="p-field">
+                        <label for="postalCodeTxt">Postal Code</label>
+                        <input
+                            #postalCodeTxt="ngModel"
+                            id="postalCodeTxt"
+                            name="postalCodeTxt"
+                            type="text"
+                            maxlength="7"
+                            placeholder="SXXXXXX"
+                            [(ngModel)]="deliveryAddress.postalCode"
+                            minlength="7"
+                            maxlength="7"
+                            pattern="[S]{1}\d{6}"
+                            title="Postal Code is not correctly formatted"
+                            required
+                            pInputText
+                        />
+                        <small
+                            *ngIf="
+                                postalCodeTxt.invalid &&
+                                (postalCodeTxt.dirty ||
+                                    postalCodeTxt.touched ||
+                                    submitted)
+                            "
+                            class="p-error"
+                            >Postal Code is required and format must be in
+                            SXXXXXX.</small
+                        >
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="p-grid p-nogutter p-justify-end">
+                    <p-button
+                        type="submit"
+                        label="Next"
+                        icon="pi pi-angle-right"
+                        iconPos="right"
+                    ></p-button>
+                </div>
+            </ng-template>
+        </p-card>
+    </form>
+</div>

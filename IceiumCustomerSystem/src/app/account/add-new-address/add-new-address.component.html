@@ -1,0 +1,122 @@
+<p-toast></p-toast>
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>Address</h2>
+        <p>Add New Address</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="profile-container">
+            <div *ngIf="addAddressError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+            <form
+                #addNewAddressForm="ngForm"
+                (ngSubmit)="addNewAddress(addNewAddressForm)"
+            >
+                <div class="p-fluid">
+                    <div
+                        *ngIf="
+                            addressTxt.invalid &&
+                            (addressTxt.dirty ||
+                                addressTxt.touched ||
+                                submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                addressTxt.errors != null &&
+                                addressTxt.errors.required
+                            "
+                        >
+                            Address is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="addressTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Address
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #addressTxt="ngModel"
+                                id="addressTxt"
+                                name="addressTxt"
+                                type="text"
+                                maxlength="256"
+                                [(ngModel)]="newAddress.address"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            postalCodeTxt.invalid &&
+                            (postalCodeTxt.dirty ||
+                                postalCodeTxt.touched ||
+                                submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                postalCodeTxt.errors != null &&
+                                postalCodeTxt.errors.required
+                            "
+                        >
+                            Postal Code is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="postalCodeTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Postal Code
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #postalCodeTxt="ngModel"
+                                id="postalCodeTxt"
+                                name="postalCodeTxt"
+                                type="text"
+                                minlength="7"
+                                maxlength="7"
+                                placeholder="SXXXXXX"
+                                [(ngModel)]="newAddress.postalCode"
+                                pattern="[S]{1}\d{6}"
+                                title="Postal Code is not correctly formatted"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+
+                    <div class="p-grid p-jc-end">
+                        <div class="account-save-button p-grid">
+                            <p-button
+                                class="p-col"
+                                label="Back"
+                                routerLink="/viewAllAddresses"
+                                type="button"
+                            >
+                            </p-button>
+                            <p-button
+                                class="p-col"
+                                label="Add New Address"
+                                type="submit"
+                            ></p-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

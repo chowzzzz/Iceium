@@ -1,0 +1,105 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+.customize-header {
+    width: 90vw;
+    margin: 0 auto;
+}
+
+.select-container,
+.customize-container {
+    text-align: center;
+    margin: 3em;
+}
+
+hr {
+    margin: 0;
+}
+
+.image-box {
+    position: relative;
+    width: 40vw;
+    height: 40vw;
+}
+
+#figure-shoelaces,
+#hockey-shoelaces {
+    position: absolute;
+    z-index: 4;
+    mix-blend-mode: multiply;
+}
+
+#figure-skates-fill,
+#hockey-color-area-1 {
+    position: absolute;
+    z-index: 3;
+    mix-blend-mode: multiply;
+}
+
+#hockey-color-area-2 {
+    position: absolute;
+    z-index: 2;
+    mix-blend-mode: multiply;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+
+.shoelaces-shape {
+    fill: #ffffff;
+}
+
+.skates-shape {
+    fill: #ffffff;
+}
+
+.skates-shape-1 {
+    fill: #ffffff;
+}
+
+.skates-shape-2 {
+    fill: #ffffff;
+}
+
+.p-col-5 {
+    padding: 0;
+}
+
+.customize-color {
+    margin: 0 auto;
+}
+
+.p-grid {
+    margin: 0;
+}
+
+.size {
+    margin: 0 auto 2em;
+    width: fit-content;
+}
+
+.errorText {
+    text-align: center;
+}
+
+.colorErrorText {
+    color: #c73f3a;
+    margin-bottom: 1.5em;
+}

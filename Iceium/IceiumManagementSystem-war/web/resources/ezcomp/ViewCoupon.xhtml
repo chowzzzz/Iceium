@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog id="dialogViewCoupon" widgetVar="dialogViewCoupon" header="View Coupon" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formViewCoupon">
+
+                <p:panelGrid style="float: left; max-width: 40em;" styleClass="noBorder" columns="2">
+
+                    <p:outputLabel for="couponId" styleClass="detailHeader" value="ID"/>
+                    <h:outputText id="couponId" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.couponId}" />
+
+                    <p:outputLabel for="couponCode" styleClass="detailHeader" value="Coupon Code"/>
+                    <h:outputText id="couponCode" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.couponCode}" />
+
+                    <p:outputLabel for="discountRate" styleClass="detailHeader" value="Discount Rate"/>
+                    <h:outputText id="discountRate" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.discountRate}">
+                        <f:convertNumber pattern="#0.00%" />
+                    </h:outputText>
+
+                    <p:outputLabel for="startDateTime" styleClass="detailHeader" value="Start Date"/>
+                    <h:outputText id="startDateTime" value="#{viewPromotionManagedBean.couponEntityToView.startDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="EEEE, dd MMM yyyy, HH:mm:ss" />
+                    </h:outputText>
+
+                    <p:outputLabel for="endDateTime" styleClass="detailHeader" value="End Date"/>
+                    <h:outputText id="endDateTime" value="#{viewPromotionManagedBean.couponEntityToView.endDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="EEEE, dd MMM yyyy, HH:mm:ss" />
+                    </h:outputText>
+
+                    <p:outputLabel for="description" styleClass="detailHeader" value="Description"/>
+                    <h:outputText id="description" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.description}" />
+
+                    <p:outputLabel for="minimumSpend" styleClass="detailHeader" value="Minimum Spend"/>
+                    <h:outputText id="minimumSpend" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.minimumSpend}">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="$" type="currency" currencyCode="SGD" />
+                    </h:outputText>
+
+                    <p:outputLabel for="currentRedemptions" styleClass="detailHeader" value="Current Redemptions"/>
+                    <h:outputText id="currentRedemptions" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.currentRedemptions}" />
+
+                    <p:outputLabel for="maximumRedemptions" styleClass="detailHeader" value="Maximum Redemptions"/>
+                    <h:outputText id="maximumRedemptions" styleClass="detailContent" value="#{viewPromotionManagedBean.couponEntityToView.maximumRedemptions}" />
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

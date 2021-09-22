@@ -1,0 +1,3 @@
+"%JAVA_HOME%\bin\keytool" -list -keystore cacerts.jks -storepass changeit
+"%JAVA_HOME%\bin\keytool" -importcert -alias gmail -file C:\gmail.pem -keystore cacerts.jks -trustcacerts -storepass changeit
+"%JAVA_HOME%\bin\keytool" -list -keystore cacerts.jks -storepass changeit

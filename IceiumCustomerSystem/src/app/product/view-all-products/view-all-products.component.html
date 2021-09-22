@@ -1,0 +1,91 @@
+<div class="products-container p-grid">
+    <app-filter-bar class="p-col-2"></app-filter-bar>
+
+    <p-dataView
+        #dv
+        [value]="products"
+        [paginator]="true"
+        [rows]="16"
+        layout="grid"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        filterBy="name"
+        class="p-col-10"
+    >
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end">
+                <p-dropdown
+                    [options]="sortOptions"
+                    [(ngModel)]="sortKey"
+                    placeholder="Sort By"
+                    (onChange)="onSortChange($event)"
+                    styleClass="p-mb-2 p-mb-md-0"
+                ></p-dropdown>
+                <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input
+                        type="search"
+                        pInputText
+                        placeholder="Search by Name"
+                        (input)="dv.filter($any($event.target).value)"
+                    />
+                </span> -->
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="gridItem">
+            <div class="p-col-12 p-md-3">
+                <a
+                    href="#"
+                    routerLink="/viewProductDetails/{{ product.productId }}"
+                >
+                    <div class="product-grid-item card p-shadow-6">
+                        <div class="product-grid-item-top">
+                            <div>
+                                <i class="pi pi-tag product-category-icon"></i>
+                                <span class="product-category"
+                                    >&nbsp;{{
+                                        product.categoryEntity.name
+                                    }}</span
+                                >
+                            </div>
+                            <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                        </div>
+                        <div class="product-grid-item-content">
+                            <div class="img-box">
+                                <img
+                                    [src]="
+                                        'http://localhost:8080/IceiumManagementSystem-war/productImages/' +
+                                        product.imageLink
+                                    "
+                                    [alt]="product.name"
+                                    class="product-img"
+                                    width="80%"
+                                    height="100%"
+                                />
+                            </div>
+                            <div class="product-name p-my-1">
+                                {{ product.name }}
+                            </div>
+                            <p-rating
+                                [ngModel]="product.rating"
+                                [readonly]="true"
+                                [cancel]="false"
+                                class="p-mb-1"
+                            ></p-rating>
+                        </div>
+                        <div class="product-grid-item-bottom">
+                            <div *ngIf="!product.saleEntity">
+                                {{ product.unitPrice | currency }}
+                            </div>
+                            <div *ngIf="product.saleEntity"> 
+                                <span class="original-price">{{ product.unitPrice | currency }}</span>
+                                &nbsp;
+                                <span>{{ product.unitPrice - (product.unitPrice * product.saleEntity.discountRate) | currency }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>

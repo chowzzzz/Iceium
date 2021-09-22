@@ -1,0 +1,72 @@
+<div *ngIf="sessionService.getIsLogin() == false">
+    <div class="login-container p-fluid">
+        <p-card class="centered" [style]="{ width: '30rem' }">
+            <ng-template pTemplate="header">
+                <img
+                    alt="Card"
+                    src="assets/images/logo_cut.png"
+                    class="login-img"
+                />
+                <br />
+                <h2>Login</h2>
+            </ng-template>
+
+            <div class="p-field p-grid login-input">
+                <div
+                    *ngIf="loginError == true"
+                    style="text-align: right; color: red"
+                >
+                    {{ errorMessage }}
+                </div>
+                <span class="p-float-label p-input-icon-left username">
+                    <i class="pi pi-user"></i>
+                    <input
+                        type="text"
+                        id="username"
+                        pInputText
+                        [(ngModel)]="username"
+                        (keyup.enter)="customerLogin()"
+                    />
+                    <label for="username">Username</label>
+                </span>
+                <span class="p-float-label p-input-icon-left">
+                    <i class="pi pi-lock"></i>
+                    <input
+                        type="password"
+                        id="password"
+                        pInputText
+                        [(ngModel)]="password"
+                        (keyup.enter)="customerLogin()"
+                    />
+                    <label for="password">Password</label>
+                </span>
+            </div>
+            <div class="p-col-11 login-button">
+                <span>
+                    <p-button
+                        label="Login"
+                        (onClick)="customerLogin()"
+                    ></p-button>
+                </span>
+            </div>
+        </p-card>
+    </div>
+</div>
+
+<div *ngIf="sessionService.getIsLogin() == true" class="centered">
+    <p-card [style]="{ width: '25rem', 'text-align': 'center' }">
+        <p>
+            You are already login as
+            {{ sessionService.getCurrentCustomer().firstName }}
+            {{ sessionService.getCurrentCustomer().lastName }}
+        </p>
+        <ng-template pTemplate="footer" [style]="{ margin: '1rem 0' }">
+            <p-button
+                class="footer-button"
+                label="Go back to Home page"
+                icon="pi pi-home"
+                routerLink="/index"
+            ></p-button>
+        </ng-template>
+    </p-card>
+</div>

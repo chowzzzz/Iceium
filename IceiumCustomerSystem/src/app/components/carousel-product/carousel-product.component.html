@@ -1,0 +1,58 @@
+<div class="carousel-container">
+    <p-carousel
+        [value]="products"
+        [numVisible]="4"
+        [numScroll]="4"
+        [circular]="true"
+        [responsiveOptions]="responsiveOptions"
+    >
+        <ng-template pTemplate="header">
+            <h2>{{ productType }}</h2>
+        </ng-template>
+        <ng-template let-product pTemplate="item">
+            <a routerLink="/viewProductDetails/{{ product.productId }}">
+                <div class="product-item">
+                    <div class="product-item-content">
+                        <div class="p-mb-3 img-box">
+                            <img
+                                src="http://localhost:8080/IceiumManagementSystem-war/productImages/{{
+                                    product.imageLink
+                                }}"
+                                [alt]="product.name"
+                                class="product-img"
+                            />
+                        </div>
+                        <div>
+                            <h4 class="product-name p-mb-1">
+                                {{ product.name }}
+                            </h4>
+                            <h6 class="p-mt-0 p-mb-3">
+                                <div *ngIf="!product.saleEntity">
+                                    {{ product.unitPrice | currency }}
+                                </div>
+                                <div *ngIf="product.saleEntity">
+                                    <span class="original-price">{{
+                                        product.unitPrice | currency
+                                    }}</span>
+                                    &nbsp;
+                                    <span>{{
+                                        product.unitPrice -
+                                            product.unitPrice *
+                                                product.saleEntity.discountRate
+                                            | currency
+                                    }}</span>
+                                </div>
+                            </h6>
+
+                            <p-rating
+                                [ngModel]="product.rating"
+                                [readonly]="true"
+                                [cancel]="false"
+                            ></p-rating>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </ng-template>
+    </p-carousel>
+</div>

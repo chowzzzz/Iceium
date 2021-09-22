@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogPrintStaffReport" widgetVar="dialogPrintStaffReport" header="Print Staff Report" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formPrintStaffReport">
+
+                <!--<p:messages id="messages" redisplay="false" closable="true" />-->
+
+                <p:panelGrid style="width: 25em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column><p:outputLabel for="selAccessRight" styleClass="detailHeader" value="Select Staff Role: " /></p:column>
+                        <p:column>
+                            <p:selectOneMenu id="selAccessRight" value="#{indexManagedBean.accessRight}" required="true" requiredMessage="Access right is required">
+                                <f:selectItem itemValue="All" itemLabel="All" />
+                                <f:selectItems value="#{indexManagedBean.accessRightEnums}" var="accessRightEnum" itemValue="#{accessRightEnum}" itemLabel="#{accessRightEnum.printName}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">
+                            <p:separator />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <div style="text-align: center;">
+                                <p:commandButton value="Print Staff Report" update="@form" process="@form" actionListener="#{indexManagedBean.generateStaffReport()}" ajax="false" icon="pi pi-arrow-down" oncomplete="PF('dialogPrintStaffReport').show()" />
+                            </div>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+
+</html>

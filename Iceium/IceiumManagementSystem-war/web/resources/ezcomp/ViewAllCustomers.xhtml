@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:form id="formAllCustomers">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllCustomers" 
+                         widgetVar="dataTableAllCustomers" 
+                         value="#{customerManagementManagedBean.customerEntities}" 
+                         var="customerEntity" 
+                         rowKey="#{customerEntity.customerId}" 
+                         rowIndexVar="row"                    
+                         selection="#{customerManagementManagedBean.viewCustomerManagedBean.customerEntityToView}"          
+                         selectionMode="single"
+                         filteredValue="#{customerManagementManagedBean.filteredCustomerEntities}"
+                         rows="5" 
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         rowsPerPageTemplate="5,10,20,50,{ShowAll|'All'}">
+
+                <p:ajax event="rowDblselect" update="ccViewCustomer:dialogViewCustomer" global="false" oncomplete="PF('dialogViewCustomer').show()"/>
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllCustomers').filter()" style="width:20em" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="ID" sortBy="#{customerEntity.customerId}" filterBy="#{customerEntity.customerId}" filterMatchMode="exact">
+                    <h:outputText value="#{customerEntity.customerId}" />
+                </p:column>
+
+                <p:column headerText="Name" sortBy="#{customerEntity.fullName}" filterBy="#{customerEntity.fullName}" filterMatchMode="contains">
+                    <h:outputText value="#{customerEntity.fullName}" />
+                </p:column>   
+
+                <p:column headerText="Email" sortBy="#{customerEntity.email}" filterBy="#{customerEntity.email}" filterMatchMode="contains">
+                    <h:outputText value="#{customerEntity.email}" />
+                </p:column>
+
+                <p:column headerText="Username" sortBy="#{customerEntity.username}" filterBy="#{customerEntity.username}" filterMatchMode="contains">
+                    <h:outputText value="#{customerEntity.username}" />
+                </p:column>                   
+
+                <p:column id="isEnabled" filterBy="#{customerEntity.isEnabled}" headerText="Enabled/Disabled" filterMatchMode="equals">
+                    <f:facet name="filter">
+                        <p:selectOneButton onchange="PF('dataTableAllCustomers').filter()">
+                            <f:converter converterId="javax.faces.Boolean" />
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Enabled" itemValue="true" />
+                            <f:selectItem itemLabel="Disabled" itemValue="false" />
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputText value="#{customerEntity.isEnabled? 'Enabled': 'Disabled'}" />
+                </p:column>
+
+
+                <p:column headerText="Action" style="text-align: center;">
+                    <p:commandButton icon="pi pi-pencil" actionListener="#{customerManagementManagedBean.doUpdateCustomer}" update="@composite:@next:@next:dialogUpdateCustomer" oncomplete="PF('dialogUpdateCustomer').show()">
+                        <f:attribute name="customerEntityToUpdate" value="#{customerEntity}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pi pi-trash" actionListener="#{customerManagementManagedBean.deleteCustomer}" update="@form">
+                        <f:attribute name="customerEntityToDelete" value="#{customerEntity}" />
+                        <p:confirm header="Confirmation" message="Are you sure you want to delete #{customerEntity.fullName} (ID: #{customerEntity.customerId})?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:columnGroup type="footer">   
+                    <p:row>
+                        <p:column colspan="6" footerText="#{customerManagementManagedBean.customerEntities.size()} customers" />
+                    </p:row>
+                </p:columnGroup>
+                
+            </p:dataTable>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
+
+        </h:form>
+
+    </cc:implementation>
+</html>

@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateCustomer" widgetVar="dialogUpdateCustomer" header="Update Customer Details" width="60em" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateCustomer">
+
+                <p:messages id="messages" redisplay="false" />
+
+                <p:panelGrid styleClass="noBorder">
+
+                    <p:row>
+                        <p:column><p:outputLabel for="customerId" styleClass="detailHeader" value="ID"/></p:column>
+                        <p:column><p:inputText style="width: 100%;" id="customerId" styleClass="detailContent" value="#{customerManagementManagedBean.customerEntityToUpdate.customerId}" disabled="true" /></p:column>                        
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="username" styleClass="detailHeader" value="Username"/></p:column>
+                        <p:column><p:inputText style="width: 100%;" id="username" styleClass="detailContent" value="#{customerManagementManagedBean.customerEntityToUpdate.username}" disabled="true" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="firstName" styleClass="detailHeader" value="First Name"/></p:column>
+                        <p:column><p:inputText style="width: 100%;" id="firstName" styleClass="detailContent" value="#{customerManagementManagedBean.customerEntityToUpdate.firstName}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="lastName" styleClass="detailHeader" value="Last Name"/></p:column>
+                        <p:column><p:inputText style="width: 100%;" id="lastName" styleClass="detailContent" value="#{customerManagementManagedBean.customerEntityToUpdate.lastName}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="email" styleClass="detailHeader" value="Email"/></p:column>
+                        <p:column><p:inputText style="width: 100%;" id="email" styleClass="detailContent" value="#{customerManagementManagedBean.customerEntityToUpdate.email}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="isEnabled" styleClass="detailHeader" value="Enabled/Disabled: " /></p:column>
+                        <p:column>
+                            <p:selectOneRadio style="color: #FFFFFF; width: 100%;" id="isEnabled" value="#{customerManagementManagedBean.customerEntityToUpdate.isEnabled}">
+                                <f:converter converterId="javax.faces.Boolean" />
+                                <f:selectItem itemLabel="Enabled" itemValue="true" />
+                                <f:selectItem itemLabel="Disabled" itemValue="false" />
+                            </p:selectOneRadio>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="dataTableAllAddress" styleClass="detailHeader" value="Address: " /></p:column>
+                        <p:column>
+                            <p:dataTable id="dataTableAllAddress" 
+                                         widgetVar="dataTableAllAddress" 
+                                         value="#{customerManagementManagedBean.addressEntitiesToUpdate}" 
+                                         var="addressEntity" 
+                                         rowKey="#{addressEntity.addressId}" 
+                                         rowIndexVar="row"       
+                                         rows="5" 
+                                         rowsPerPageTemplate="5,10,20,50,{ShowAll|'All'}">
+                                <p:column style="width: 3em;" headerText="S/N" sortBy="#{row}">
+                                    <h:outputText value="#{row + 1}" />
+                                </p:column>
+                                <p:column headerText="Address" sortBy="#{addressEntity.address}">
+                                    <f:facet name="footer">
+                                        <p:inputText style="width: 95%;" maxlength="256" value="#{customerManagementManagedBean.newAddressEntity.address}" required="true" requiredMessage="Address is required" />
+                                    </f:facet>
+                                    <h:outputText value="#{addressEntity.address}" />
+                                </p:column>
+                                <p:column style="width: 7em;" headerText="Postal Code" sortBy="#{addressEntity.postalCode}">
+                                    <f:facet name="footer">
+                                        <p:inputText style="width: 6.5em;" maxlength="7" value="#{customerManagementManagedBean.newAddressEntity.postalCode}" required="true" requiredMessage="Postal Code is required" />
+                                    </f:facet>
+                                    <h:outputText value="#{addressEntity.postalCode}" />
+                                </p:column>
+                                <p:column style="width: 6em;" headerText="Action">
+                                    <f:facet name="footer">
+                                        <div style="text-align: center;">
+                                            <p:commandButton value="Add" actionListener="#{customerManagementManagedBean.addAddress}" update="@form:dataTableAllAddress @form:messages" process="@form" />
+                                        </div>
+                                    </f:facet>
+                                    <div style="text-align: center;">
+                                        <p:commandButton value="Delete" actionListener="#{customerManagementManagedBean.deleteAddress}" update="@form:dataTableAllAddress @form:messages" process="@this">
+                                            <f:attribute name="addressRow" value="#{row}" />
+                                        </p:commandButton>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3" style="text-align: center;">
+                            <p:commandButton value="Update Customer" update="@form @composite:@previous:@previous:formAllCustomers:dataTableAllCustomers" process="@this" actionListener="#{customerManagementManagedBean.updateCustomer}" oncomplete="PF('dialogUpdateCustomer').show();" >
+                                <f:attribute name="customerEntityToUpdate" value="#{customerManagementManagedBean.customerEntityToUpdate}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

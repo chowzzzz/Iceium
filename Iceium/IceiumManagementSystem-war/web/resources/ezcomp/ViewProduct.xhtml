@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogViewProduct" widgetVar="dialogViewProduct" header="View Product" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formViewProduct">
+
+                <p:panelGrid style="width: #{viewProductManagedBean.productEntityToView.imageLink == null ? '80em' : '110em'};" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column style="width: 12em;"></p:column>
+                        <p:column></p:column>
+                        <p:column rowspan="11">
+                            <p:graphicImage style="width: 30em;" value="/productImages/#{viewProductManagedBean.productEntityToView.imageLink}" alt="image" rendered="#{viewProductManagedBean.productEntityToView.imageLink != null}" />                            
+                        </p:column>                        
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="productId" styleClass="detailHeader" value="ID: "/></p:column>
+                        <p:column><h:outputText id="productId" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.productId}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="skuCode" styleClass="detailHeader" value="SkuCode: "/></p:column>
+                        <p:column><h:outputText id="skuCode" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.skuCode}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="name" styleClass="detailHeader" value="Name: "/></p:column>
+                        <p:column><h:outputText id="name" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.name}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="description" styleClass="detailHeader" value="Description: "/></p:column>
+                        <p:column><h:outputText id="description" styleClass="detailContent dialogDescription" value="#{viewProductManagedBean.productEntityToView.description}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="brand" styleClass="detailHeader" value="Brand: "/></p:column>
+                        <p:column><h:outputText id="brand" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.modelEntity.brandEntity.name}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="model" styleClass="detailHeader" value="Model: "/></p:column>
+                        <p:column><h:outputText id="model" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.modelEntity.name}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="category" styleClass="detailHeader" value="Category: "/></p:column>
+                        <p:column><h:outputText id="category" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.categoryEntity.name}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="unitPrice" styleClass="detailHeader" value="Unit Price: "/></p:column>
+                        <p:column>
+                            <h:outputText id="unitPrice" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.unitPrice}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="$" type="currency" currencyCode="SGD" />
+                            </h:outputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row rendered="#{viewProductManagedBean.productEntityToView.saleEntity != null}">
+                        <p:column><p:outputLabel for="discountedPrice" styleClass="detailHeader" value="Discounted Price: "/></p:column>
+                        <p:column>
+                            <h:outputText id="discountedPrice" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.discountedPrice}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="$" type="currency" currencyCode="SGD" />
+                            </h:outputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row rendered="#{viewProductManagedBean.productEntityToView.saleEntity != null}">
+                        <p:column><p:outputLabel for="sale" styleClass="detailHeader" value="Sale Description: "/></p:column>
+                        <p:column>
+                            <h:outputText id="sale" styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.saleEntity.description}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row rendered="#{viewProductManagedBean.productEntityToView.saleEntity != null}">
+                        <p:column><p:outputLabel for="sale" styleClass="detailHeader" value="Sale Discount: "/></p:column>
+                        <p:column>
+                            <h:outputText styleClass="detailContent" value="#{viewProductManagedBean.productEntityToView.saleEntity.discountRate}">
+                                <f:convertNumber pattern="#0.00%" />
+                            </h:outputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="tags" styleClass="detailHeader" value="Tag(s): " /></p:column>
+                        <p:column>
+                            <p:dataList id="tags" value="#{viewProductManagedBean.productEntityToView.tagEntities}" var="tag" type="unordered">
+                                #{tag.name}
+                            </p:dataList>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="dataTableProductSpecification" styleClass="detailHeader" value="Specifications: "/>
+                        </p:column>
+                        <p:column>
+                            <p:dataTable id="dataTableProductSpecification" 
+                                         value="#{viewProductManagedBean.productEntityToView.specificationEntities}" 
+                                         var="specificationEntity"
+                                         rows="3" 
+                                         paginator="true" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column headerText="ID" sortBy="#{specificationEntity.specificationId}">
+                                    <h:outputText value="#{specificationEntity.specificationId}" />
+                                </p:column>
+                                <p:column headerText="Size" sortBy="#{specificationEntity.sizeEntity.size}">
+                                    <h:outputText value="#{specificationEntity.sizeEntity.size += ' ' += (specificationEntity.sizeEntity.sizeTypeEnum == 'YOUTH' ? ' Y' : '')}" />
+                                </p:column>
+                                <p:column headerText="Color" sortBy="#{specificationEntity.colorEntity.name}">
+                                    <h:outputText value="#{specificationEntity.colorEntity.name}" />
+                                </p:column>
+                                <p:column headerText="Quantity on Hand" sortBy="#{specificationEntity.quantityOnHand}">
+                                    <h:outputText value="#{specificationEntity.quantityOnHand}" />
+                                </p:column>
+                                <p:column headerText="Reorder Quantity" sortBy="#{specificationEntity.reorderQuantity}">
+                                    <h:outputText value="#{specificationEntity.reorderQuantity}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+
+</html>

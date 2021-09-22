@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateProduct1" widgetVar="dialogUpdateProduct1" header="Update Product" width="80em" height="60em" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateProduct1">
+
+                <p:messages id="messages1" redisplay="false" />
+
+                <p:panelGrid style="width: 75em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column style="width: 15em;"></p:column>
+                        <p:column style="width: 30em;"></p:column>
+                        <p:column rowspan="11">
+                            <p:graphicImage style="width: 30em;" value="/productImages/#{productManagementManagedBean.selectedProductEntityToUpdate.imageLink}" alt="image" rendered="#{productManagementManagedBean.selectedProductEntityToUpdate.imageLink != null}" />                            
+                        </p:column>                        
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="productId" styleClass="detailHeader" value="ID: "/></p:column>
+                        <p:column><p:inputText style="width: 30em;" id="productId" styleClass="detailContent" value="#{productManagementManagedBean.selectedProductEntityToUpdate.productId}" disabled="true" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="skuCode" styleClass="detailHeader" value="SkuCode: "/></p:column>
+                        <p:column><p:inputText style="width: 30em;" id="skuCode" styleClass="detailContent" value="#{productManagementManagedBean.selectedProductEntityToUpdate.skuCode}" disabled="true" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="name" styleClass="detailHeader" value="Name: "/></p:column>
+                        <p:column><p:inputText style="width: 30em;" id="name" styleClass="detailContent" value="#{productManagementManagedBean.selectedProductEntityToUpdate.name}" required="true" requiredMessage="Name is required" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="description" styleClass="detailHeader" value="Description: "/></p:column>                        
+                        <p:column><p:inputTextarea style="width: 30em; resize: none;" id="description" styleClass="detailContent dialogDescription" value="#{productManagementManagedBean.selectedProductEntityToUpdate.description}" rows="5" autoResize="false" required="true" requiredMessage="Description is required" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="selBrand" styleClass="detailHeader" value="Brand: "/></p:column>
+                        <p:column>
+                            <p:selectOneMenu style="width: 30em;" id="selBrand" value="#{productManagementManagedBean.brandIdToUpdate}" required="true" requiredMessage="Brand required">
+                                <f:selectItems value="#{productManagementManagedBean.brandEntities}" var="brand" itemLabel="#{brand.name}" itemValue="#{brand.brandId}" />
+                                <p:ajax event="itemSelect" update="selModel" listener="#{productManagementManagedBean.brandSelectionChange}" />
+                            </p:selectOneMenu>
+                        </p:column>                    
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="selModel" styleClass="detailHeader" value="Model: "/></p:column>
+                        <p:column>
+                            <p:selectOneMenu style="width: 30em;" id="selModel" value="#{productManagementManagedBean.modelIdToUpdate}" required="true" requiredMessage="Model is required">
+                                <f:selectItems value="#{productManagementManagedBean.modelEntities}" var="model" itemLabel="#{model.name}" itemValue="#{model.modelId}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="selCategory" styleClass="detailHeader" value="Category: "/></p:column>
+                        <p:column>
+                            <p:selectOneMenu style="width: 30em;" id="selCategory" value="#{productManagementManagedBean.categoryIdToUpdate}" required="true" requiredMessage="Category is required">
+                                <f:selectItems value="#{productManagementManagedBean.categoryEntities}" var="category" itemLabel="#{category.name}" itemValue="#{category.categoryId}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="unitPrice" styleClass="detailHeader" value="Unit Price: "/></p:column>
+                        <p:column>                            
+                            <p:inputNumber inputStyle="width: 30em;" id="unitPrice" styleClass="detailContent" value="#{productManagementManagedBean.selectedProductEntityToUpdate.unitPrice}" symbol="$" emptyValue="0.00" minValue="0" required="true" requiredMessage="Unit Price is required"> 
+                                <p:ajax update="discountedPrice" listener="#{productManagementManagedBean.updateProductUnitPriceValueChange}" />
+                            </p:inputNumber>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel style="font-weight: bold;" for="discountedPrice" value="Discounted Price: " /></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 30em;" id="discountedPrice" value="#{productManagementManagedBean.discountedPriceToUpdate}" symbol="$" emptyValue="0.00" minValue="0" disabled="true" /> 
+                        </p:column>                        
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="selSale" value="Sale: " style="font-weight: bold;" /></p:column>
+                        <p:column>
+                            <p:selectOneMenu style="width: 30em;" id="selSale" value="#{productManagementManagedBean.saleEntityToUpdate}" var="s">
+                                <f:selectItem itemValue="#{null}" itemLabel="[Select Sale]" noSelectionOption="true" />
+                                <f:selectItems value="#{productManagementManagedBean.saleEntities}" var="sale" itemLabel="#{sale.description}" itemValue="#{sale}" />
+                                <p:ajax event="itemSelect" update="discountedPrice" listener="#{productManagementManagedBean.updateProductSaleSelectionChange}" />     
+                                <p:column style="width: 30%; border: none;">
+                                    <h:outputText value="#{s.discountRate}">
+                                        <f:convertNumber pattern="#0.00%" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="border: none;">
+                                    <h:outputText value="#{s.description}"/>
+                                </p:column>
+                                <f:facet name="footer">                                    
+                                    <h:outputText value="#{productManagementManagedBean.saleEntities.size()} sales" style="font-weight:bold; color: #FFFFFF;" />
+                                </f:facet>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel style="font-weight: bold;" for="tags" value="Tag(s): "/></p:column>
+                        <p:column>
+                            <p:selectManyCheckbox id="tags" value="#{productManagementManagedBean.tagIdsToUpdate}" layout="grid" columns="3" styleClass="grid-checkbox">
+                                <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tag" itemValue="#{tag.tagId}" itemLabel="#{tag.description}"  />
+                            </p:selectManyCheckbox>
+                        </p:column>
+                    </p:row>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align: center;">
+                                <p:commandButton value="Next" oncomplete="PF('dialogUpdateProduct2').show(); PF('dialogUpdateProduct1').hide()" />                                
+                            </p:column>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+        <p:dialog id="dialogUpdateProduct2" widgetVar="dialogUpdateProduct2" header="Update Product" width="80em" height="60em" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateProduct2">
+
+                <p:messages id="messages2" redisplay="false" />
+
+                <p:panelGrid style="width: 75em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="dataTableSpecification" styleClass="detailHeader" value="Specifications: "/>                            
+                        </p:column>
+                        <p:column>
+                            <p:dataTable id="dataTableSpecification" 
+                                         value="#{productManagementManagedBean.specificationList}" 
+                                         var="specification" 
+                                         selection="#{productManagementManagedBean.specification}"                             
+                                         selectionMode="single"
+                                         rowKey="#{specification}" 
+                                         rows="3" 
+                                         paginator="true" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                                <p:column headerText="Color" style="width: 25%;">
+                                    <f:facet name="footer">
+                                        <p:selectOneMenu style="width: 10em;" id="color" value="#{productManagementManagedBean.colorNew}" required="true" requiredMessage="Color is required" var="c">
+                                            <f:selectItem itemValue="#{null}" itemLabel="[Select Color]" noSelectionOption="true" />
+                                            <f:selectItems value="#{productManagementManagedBean.colorEntities}" var="color" itemLabel="#{color.name}" itemValue="#{color}" />
+                                            <p:column style="width: 10%; border: none;">
+                                                <div style="height: 1em; width: 1em; background-color: #{c.hex};"/>
+                                            </p:column>
+                                            <p:column style="border: none;">
+                                                <f:facet name="header">
+                                                    <h:outputText style="color: #FFFFFF;" value="Name"/>
+                                                </f:facet>
+                                                <h:outputText value="#{c.name}"/>
+                                            </p:column>
+                                            <f:facet name="footer">                                    
+                                                <h:outputText value="#{productManagementManagedBean.colorEntities.size()} colors" style="font-weight:bold; color: #FFFFFF;" />
+                                            </f:facet>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{specification.get(2).name}" />
+                                </p:column>
+
+                                <p:column headerText="Size" style="width: 25%;">
+                                    <f:facet name="footer">
+                                        <p:selectOneMenu style="width: 10em;" id="size" value="#{productManagementManagedBean.sizeNew}" required="true" requiredMessage="Size is required">
+                                            <f:selectItem itemValue="#{null}" itemLabel="[Select Size]" noSelectionOption="true" />
+                                            <f:selectItems value="#{productManagementManagedBean.sizeEntities}" var="size" itemLabel="#{size.size += (size.sizeTypeEnum == 'YOUTH' ? ' ' += ' Y' : '')}" itemValue="#{size}" />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{specification.get(3).size}" />
+                                </p:column>
+
+                                <p:column headerText="Quantity" style="width: 25%;">
+                                    <f:facet name="footer">
+                                        <p:spinner style="width: 10em;" id="quantityOnHand" min="1" value="#{productManagementManagedBean.quantityOnHandNew}" required="true" requiredMessage="Quantity on Hand is required" />
+                                    </f:facet>
+                                    <h:outputText value="#{specification.get(0)}" />
+                                </p:column>
+
+                                <p:column headerText="Reorder Quantity" style="width: 25%;">
+                                    <f:facet name="footer">
+                                        <p:spinner style="width: 10em;" id="reorderQuantity" min="0" value="#{productManagementManagedBean.reorderQuantityNew}" required="true" requiredMessage="Reorder Quantity is required" />
+                                    </f:facet>
+                                    <h:outputText value="#{specification.get(1)}" />
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Add Specification" update="@form" process="@form:dataTableSpecification" actionListener="#{productManagementManagedBean.addSpecification}" oncomplete="PF('dialogUpdateProduct2').show()" />
+                                </f:facet>
+
+                            </p:dataTable>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column>
+                            <p:dataTable id="dataTableProductSpecification" 
+                                         value="#{productManagementManagedBean.selectedProductEntityToUpdate.specificationEntities}" 
+                                         var="specificationEntity"
+                                         rowIndexVar="row"
+                                         rows="5" 
+                                         paginator="true" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                         rowsPerPageTemplate="5,10,20,50">
+                                <p:column headerText="ID" sortBy="#{specificationEntity.specificationId}">
+                                    <h:outputText value="#{specificationEntity.specificationId}" />
+                                </p:column>
+                                <p:column headerText="Size" sortBy="#{specificationEntity.sizeEntity.size}">
+                                    <h:outputText value="#{specificationEntity.sizeEntity.size += ' ' += (specificationEntity.sizeEntity.sizeTypeEnum == 'YOUTH' ? ' Y' : '')}" />
+                                </p:column>
+                                <p:column headerText="Color" sortBy="#{specificationEntity.colorEntity.name}">
+                                    <h:outputText value="#{specificationEntity.colorEntity.name}" />
+                                </p:column>
+                                <p:column headerText="Quantity on Hand" sortBy="#{specificationEntity.quantityOnHand}">
+                                    <p:spinner value="#{specificationEntity.quantityOnHand}" min="0">
+                                        <f:attribute name="index" value="#{row}" />
+                                        <f:attribute name="quantityOnHand" value="#{specificationEntity.quantityOnHand}" />
+                                        <p:ajax update="@form:dataTableProductSpecification @form:messages2" process="@this" listener="#{productManagementManagedBean.updateSpecificationQuantity}" />
+                                    </p:spinner>
+                                </p:column>
+                                <p:column headerText="Reorder Quantity" sortBy="#{specificationEntity.reorderQuantity}">
+                                    <p:spinner value="#{specificationEntity.reorderQuantity}" min="0">
+                                        <p:ajax process="@this" />
+                                    </p:spinner>
+                                </p:column>
+                                <p:column style="width: 4em; text-align: center;" headerText="Action">
+                                    <p:commandButton icon="pi pi-trash" actionListener="#{productManagementManagedBean.deleteSpecification}" update="@form:dataTableProductSpecification @form:messages2" process="@form:dataTableProductSpecification">
+                                        <f:attribute name="index" value="#{row}" />
+                                        <p:confirm header="Confirmation" message="Are you sure you want to delete specification: #{specificationEntity.specificationId}? Update Product to confirm deletion." icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+                    </p:row>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align: center;">
+                                <p:commandButton value="Back" oncomplete="PF('dialogUpdateProduct1').show(); PF('dialogUpdateProduct2').hide()" />
+                                &nbsp;
+                                <p:commandButton value="Update Product" update="@composite:dialogUpdateProduct1 @form @composite:@previous:@previous:formAllProducts:dataTableAllProducts" process="@this" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('dialogUpdateProduct1').show(); PF('dialogUpdateProduct1').show();PF('dialogUpdateProduct2').hide();" />
+                            </p:column>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+
+</html>

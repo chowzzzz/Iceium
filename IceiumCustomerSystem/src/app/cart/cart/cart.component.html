@@ -1,0 +1,173 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ width: '40em' }"></p-confirmDialog>
+<div class="cart-card">
+    <p-table [value]="cart">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <div>CART</div>
+                <div>
+                    <form
+                        #applyPromotionCodeForm="ngForm"
+                        (ngSubmit)="applyPromotionCode(applyPromotionCodeForm)"
+                    >
+                        APPLY COUPON CODE: &nbsp;
+                        <input
+                            type="text"
+                            id="couponCode"
+                            name="couponCode"
+                            placeholder="Enter coupon code"
+                            [(ngModel)]="couponCode"
+                            pInputText
+                        />
+                        <span class="smallSpace">s</span>
+                        <p-button
+                            id="couponButton"
+                            type="submit"
+                            label="Apply"
+                        ></p-button>
+                    </form>
+                    <div style="height: 1em">
+                        <span class="smallSpace">s</span>
+                    </div>
+                    <div id="coupon-card" *ngIf="coupon">
+                        <span>Coupon Code: {{ coupon?.couponCode }}</span>
+                        <br />
+                        <span
+                            >Discount Rate:
+                            {{ coupon?.discountRate | percent }}</span
+                        >
+                        <br />
+                        <span
+                            >Minimum Spend:
+                            {{ coupon?.minimumSpend | currency }}</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5%; text-align: center">S/N</th>
+                <th>Product</th>
+                <th style="width: 15%; text-align: center">Color</th>
+                <th style="width: 10%; text-align: center">Size</th>
+                <th style="width: 10%; text-align: center">Unit Price</th>
+                <th style="width: 10%; text-align: center">Quantity</th>
+                <th style="width: 15%; text-align: center">Subtotal</th>
+                <th style="width: 8%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-orderItem>
+            <tr>
+                <td>{{ orderItem.orderItemNumber }}</td>
+                <td>
+                    <div class="p-d-flex p-ai-center">
+                        <img
+                            src="http://localhost:8080/IceiumManagementSystem-war/productImages/{{
+                                orderItem.productEntity?.imageLink
+                            }}"
+                            alt="{{ orderItem.productEntity?.name }}"
+                            width="100px"
+                            class="p-mr-4"
+                        />
+                        <span>{{ orderItem.productEntity?.name }}</span>
+                    </div>
+                </td>
+                <td class="p-text-center">
+                    {{ orderItem?.specificationEntity?.colorEntity?.name }}
+                    <p-colorPicker
+                        [ngModel]="
+                            orderItem?.specificationEntity?.colorEntity?.hex
+                        "
+                        [disabled]="true"
+                        [ngModelOptions]="{ standalone: true }"
+                        styleClass="color-picker"
+                        class="p-ml-3"
+                    ></p-colorPicker>
+                </td>
+                <td class="p-text-center">
+                    {{ orderItem?.specificationEntity?.sizeEntity?.size }}
+                </td>
+                <td class="p-text-center">
+                    <div *ngIf="!orderItem.productEntity?.saleEntity">
+                        {{ orderItem.productEntity?.unitPrice | currency }}
+                    </div>
+                    <div *ngIf="orderItem.productEntity?.saleEntity">
+                        <span class="original-price">{{
+                            orderItem.productEntity?.unitPrice | currency
+                        }}</span>
+                        &nbsp;
+                        <span>{{
+                            getDiscountedUnitPrice(orderItem) | currency
+                        }}</span>
+                    </div>
+                </td>
+                <td class="p-text-center">
+                    <p-inputNumber
+                        [(ngModel)]="orderItem.quantity"
+                        id="quantity"
+                        name="quantity"
+                        [showButtons]="true"
+                        [min]="0"
+                        [max]="orderItem?.specificationEntity?.quantityOnHand"
+                        (onInput)="cartChangeQuantity($event, orderItem)"
+                    ></p-inputNumber>
+                </td>
+                <td class="p-text-right">
+                    <div *ngIf="!orderItem.productEntity?.saleEntity">
+                        {{ orderItem?.subTotal | currency }}
+                    </div>
+                    <div *ngIf="orderItem.productEntity?.saleEntity">
+                        <span class="original-price">{{
+                            orderItem?.subTotal | currency
+                        }}</span>
+                        &nbsp;
+                        <span>{{
+                            getDiscountedSubtotal(orderItem) | currency
+                        }}</span>
+                    </div>
+                </td>
+                <td class="p-text-center">
+                    <button
+                        type="button"
+                        icon="pi pi-times"
+                        class="p-button-danger p-button-raised p-button-rounded"
+                        (click)="deleteOrderItem(orderItem)"
+                        pButton
+                    ></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr *ngIf="total > 0">
+                <td colspan="6" class="p-text-right">Total:</td>
+                <td class="p-text-right">
+                    <div *ngIf="!coupon">
+                        {{ total | currency }}
+                    </div>
+                    <div *ngIf="coupon">
+                        <span class="original-price">{{
+                            total | currency
+                        }}</span>
+                        &nbsp;
+                        <span>{{ getDiscountedTotal(total) | currency }}</span>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <div class="p-mr-2">
+                    You have {{ cart ? cart.length : 0 }} products.
+                </div>
+                <div class="p-mr-2" *ngIf="cart.length > 0">
+                    <p-button
+                        type="button"
+                        (click)="checkoutCart()"
+                        label="Checkout Cart"
+                    ></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-table>
+</div>

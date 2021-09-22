@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateColor" widgetVar="dialogUpdateColor" header="Update New Color" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateNewColor">
+
+                <p:messages id="messages" redisplay="false" closable="true" />
+
+                <p:panelGrid id="updateColorGrid" style="width: 30em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column style="width: 20%;"><p:outputLabel style="font-weight: bold;" for="name" value="Name: "/></p:column>
+                        <p:column style="width: 50%;"><p:inputText style="width: 16em;" id="name" value="#{miscellaneousManagedBean.selectedColorEntityToUpdate.name}" placeholder="Color" required="true" requiredMessage="Name is required" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style="width: 20%;"><p:outputLabel style="font-weight: bold;" for="colorPicker" value="HEX Code: "/></p:column>
+                        <p:column style="width: 50%;">
+                            <p:colorPicker id="colorPicker" value="#{miscellaneousManagedBean.selectedColorEntityToUpdate.hex}" mode="inline" required="true" requiredMessage="Color HEX is required" />
+                        </p:column>     
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="2" style="text-align: center;">
+                            <p:commandButton type="reset" value="Clear">
+                                <p:ajax event="click" update="@form" resetValues="true" oncomplete="PF('dialogUpdateColor').show()" />
+                            </p:commandButton>&nbsp;
+                            <p:commandButton value="Update Color" update="@form miscellaneousTabView:ccViewAllColors:formAllColors:dataTableAllColors" oncomplete="PF('dialogUpdateColor').show()" actionListener="#{miscellaneousManagedBean.updateColor}" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+
+    </cc:implementation>
+</html>

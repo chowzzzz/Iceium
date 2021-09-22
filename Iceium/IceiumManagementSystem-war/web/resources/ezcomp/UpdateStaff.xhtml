@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateStaff" widgetVar="dialogUpdateStaff" header="Update Staff" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateStaff">
+
+                <p:messages id="messagesUpdateProduct" redisplay="false" />
+
+                <p:panelGrid style="float: left; max-width: 30em;" styleClass="noBorder" >
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                        <p:column rowspan="7">
+                            <p:graphicImage library="images" name="user.png" />                            
+                        </p:column>
+                    </p:row>
+                    <p:row>                        
+                        <p:column><p:outputLabel style="width: 8em;" for="staffId" styleClass="detailHeader" value="ID"/></p:column>
+                        <p:column><p:inputText style="width: 13em;" id="staffId" styleClass="detailContent" value="#{staffManagementManagedBean.selectedStaffEntityToUpdate.staffId}" disabled="true" /></p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column><p:outputLabel for="firstName" styleClass="detailHeader" value="First Name"/></p:column>
+                        <p:column><p:inputText style="width: 13em;" id="firstName" styleClass="detailContent" value="#{staffManagementManagedBean.selectedStaffEntityToUpdate.firstName}" /></p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column><p:outputLabel for="lastName" styleClass="detailHeader" value="Last Name"/></p:column>
+                        <p:column><p:inputText style="width: 13em;" id="lastName" styleClass="detailContent" value="#{staffManagementManagedBean.selectedStaffEntityToUpdate.lastName}" /></p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column><p:outputLabel for="selAccessRight" styleClass="detailHeader" value="Access Right"/></p:column>
+                        <p:column>
+                            <p:selectOneMenu style="width: 13em;" id="selAccessRight" value="#{staffManagementManagedBean.selectedStaffEntityToUpdate.accessRightEnum}" required="true" requiredMessage="Access right is required">
+                                <f:converter converterId="accessRightEnumConverter" />
+                                <f:selectItems value="#{staffManagementManagedBean.accessRightEnums}" var="accessRightEnum" itemValue="#{accessRightEnum}" itemLabel="#{accessRightEnum.printName}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column><p:outputLabel for="username" styleClass="detailHeader" value="Username"/></p:column>
+                        <p:column><p:inputText style="width: 13em;" id="username" styleClass="detailContent" value="#{staffManagementManagedBean.selectedStaffEntityToUpdate.username}" disabled="true" /></p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column><p:outputLabel for="password" styleClass="detailHeader" value="Password"/></p:column>
+                        <p:column><p:inputText style="width: 13em;" id="password" styleClass="detailContent" value="•••••••••" disabled="true" /></p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column colspan="3" style="text-align: center;">
+                            <p:commandButton value="Update Staff" update="@form @composite:@previous:@previous:formAllStaffs:dataTableAllStaffs" actionListener="#{staffManagementManagedBean.updateStaff}" oncomplete="PF('dialogUpdateStaff').show();" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

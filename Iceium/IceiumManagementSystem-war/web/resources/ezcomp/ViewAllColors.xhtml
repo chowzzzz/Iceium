@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:form id="formAllColors">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllColors" 
+                         widgetVar="dataTableAllColors" 
+                         value="#{miscellaneousManagedBean.colorEntities}" 
+                         var="colorEntity" 
+                         rowKey="#{colorEntity.colorId}" 
+                         rowIndexVar="row"                      
+                         filteredValue="#{miscellaneousManagedBean.filteredColorEntities}"
+                         rows="5" 
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         rowsPerPageTemplate="5,10,20,50,{ShowAll|'All'}">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllColors').filter()" style="width:20em" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="ID" sortBy="#{colorEntity.colorId}" filterBy="#{colorEntity.colorId}" filterMatchMode="exact">
+                    <h:outputText value="#{colorEntity.colorId}" />
+                </p:column>
+
+                <p:column headerText="Name" sortBy="#{colorEntity.name}" filterBy="#{colorEntity.name}" filterMatchMode="contains">
+                    <h:outputText value="#{colorEntity.name}" />
+                </p:column>                   
+
+                <p:column headerText="Hex Code" sortBy="#{colorEntity.hex}" filterBy="#{colorEntity.hex}" filterMatchMode="contains">
+                    <div style="height: 1em; width: 1em; background-color: #{colorEntity.hex};">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h:outputText value="#{colorEntity.hex}" />
+                    </div>
+                </p:column>        
+
+                <p:column headerText="Code" sortBy="#{colorEntity.code}" filterBy="#{colorEntity.code}" filterMatchMode="contains">
+                    <h:outputText value="#{colorEntity.code}" />
+                </p:column> 
+
+                <p:column headerText="Action" style="text-align: center;">
+                    <p:commandButton icon="pi pi-pencil" actionListener="#{miscellaneousManagedBean.doUpdateColor}" update="ccUpdateColor:dialogUpdateColor" oncomplete="PF('dialogUpdateColor').show()">
+                        <f:attribute name="colorEntityToUpdate" value="#{colorEntity}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pi pi-trash" actionListener="#{miscellaneousManagedBean.deleteColor}" update="@form:dataTableAllColors @form:messages">
+                        <f:attribute name="colorEntityToDelete" value="#{colorEntity}" />
+                        <p:confirm header="Confirmation" message="Are you sure you want to delete #{colorEntity.name} (Hex: #{colorEntity.hex})?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:columnGroup type="footer">   
+                    <p:row>
+                        <p:column colspan="5" footerText="#{miscellaneousManagedBean.colorEntities.size()} colors" />
+                    </p:row>
+                </p:columnGroup>
+
+            </p:dataTable>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
+
+        </h:form>
+
+    </cc:implementation>
+</html>

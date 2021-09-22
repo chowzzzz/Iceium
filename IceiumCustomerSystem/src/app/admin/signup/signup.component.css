@@ -1,0 +1,31 @@
+.signup-container {
+    text-align: center;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.signup-img {
+    width: 40%;
+    margin: 3em 0 0;
+}
+
+h2 {
+  margin: 1em 0 0;
+}
+
+.signup-input input {
+    height: 3em;
+}
+
+.signup-button {
+    margin: 0 auto 0.5em;
+}
+
+p {
+  margin: 0;
+}

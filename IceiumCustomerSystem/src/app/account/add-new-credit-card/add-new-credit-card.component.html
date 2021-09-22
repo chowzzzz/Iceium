@@ -1,0 +1,230 @@
+<p-toast></p-toast>
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>Credit Card</h2>
+        <p>Add New Credit Card</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="profile-container">
+            <div *ngIf="createCreditCardError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+            <form
+                #createNewCreditCardForm="ngForm"
+                (ngSubmit)="createNewCreditCard(createNewCreditCardForm)"
+            >
+                <div class="p-fluid">
+                    <div class="card-imgs">
+                        <span class="card-img">
+                            <img
+                                src="assets/images/visa.png"
+                                alt="Visa"
+                                [style.opacity]="
+                                    (ccNumber.resolvedScheme$ | async) == 'visa'
+                                        ? 1
+                                        : 0.6
+                                "
+                            /> </span
+                        >&nbsp;
+                        <span class="card-img">
+                            <img
+                                src="assets/images/mastercard.jpg"
+                                alt="Mastercard"
+                                [style.opacity]="
+                                    (ccNumber.resolvedScheme$ | async) ==
+                                    'mastercard'
+                                        ? 1
+                                        : 0.6
+                                "
+                            />
+                        </span>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            creditCardNumberTxt.invalid &&
+                            (creditCardNumberTxt.dirty ||
+                                creditCardNumberTxt.touched ||
+                                submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                creditCardNumberTxt.errors != null &&
+                                creditCardNumberTxt.errors.required
+                            "
+                        >
+                            Card Number is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="creditCardNumberTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Card Number
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #creditCardNumberTxt="ngModel"
+                                id="creditCardNumberTxt"
+                                name="creditCardNumberTxt"
+                                type="tel"
+                                autocomplete="cc-number"
+                                [(ngModel)]="newCreditCard.creditCardNumber"
+                                required
+                                pInputText
+                                ccNumber
+                                #ccNumber="ccNumber"
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            expiryDateTxt.invalid &&
+                            (expiryDateTxt.dirty ||
+                                expiryDateTxt.touched ||
+                                submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                expiryDateTxt.errors != null &&
+                                expiryDateTxt.errors.required
+                            "
+                        >
+                            Expiry Date is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="expiryDateTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Expiry Date
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-calendar
+                                #expiryDateTxt="ngModel"
+                                id="expiryDateTxt"
+                                name="expiryDateTxt"
+                                view="month"
+                                dateFormat="mm/y"
+                                [yearRange]="yearRange"
+                                [minDate]="minDate"
+                                placeholder="MM/YY"
+                                [required]="true"
+                                [yearNavigator]="true"
+                                [(ngModel)]="newCreditCard.expiryDate"
+                            ></p-calendar>
+                        </div>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            securityCodeTxt.invalid &&
+                            (securityCodeTxt.dirty ||
+                                securityCodeTxt.touched ||
+                                submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                securityCodeTxt.errors != null &&
+                                securityCodeTxt.errors.required
+                            "
+                        >
+                            Security Code is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="securityCodeTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Security Code
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #securityCodeTxt="ngModel"
+                                id="securityCodeTxt"
+                                name="securityCodeTxt"
+                                [(ngModel)]="newCreditCard.securityCode"
+                                type="tel"
+                                autocomplete="off"
+                                ccCVC
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div
+                            *ngIf="
+                                nameOnCardTxt.invalid &&
+                                (nameOnCardTxt.dirty ||
+                                    nameOnCardTxt.touched ||
+                                    submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    nameOnCardTxt.errors != null &&
+                                    nameOnCardTxt.errors.required
+                                "
+                            >
+                                Name on Card is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="nameOnCardTxt"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                        >
+                            Name on Card
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #nameOnCardTxt="ngModel"
+                                id="nameOnCardTxt"
+                                name="nameOnCardTxt"
+                                type="text"
+                                maxlength="64"
+                                [(ngModel)]="newCreditCard.nameOnCard"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+
+                    <div class="p-grid p-jc-end">
+                        <div class="account-save-button p-grid">
+                            <p-button
+                                class="p-col"
+                                label="Back"
+                                routerLink="/viewAllCreditCards"
+                                type="button"
+                            >
+                            </p-button>
+                            <p-button
+                                class="p-col"
+                                label="Add New Credit Card"
+                                type="submit"
+                            ></p-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

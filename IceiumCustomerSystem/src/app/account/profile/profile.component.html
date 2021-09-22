@@ -1,0 +1,185 @@
+<p-toast></p-toast>
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>My Profile</h2>
+        <p>Manage your profile</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="profile-container">
+            <div *ngIf="updateProfileError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+            <form
+                #updateProfileForm="ngForm"
+                (ngSubmit)="updateProfile(updateProfileForm)"
+            >
+                <div class="p-fluid">
+                    <div class="p-field p-grid">
+                        <label
+                            for="username"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                            >Username</label
+                        >
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #username="ngModel"
+                                id="username"
+                                name="username"
+                                type="text"
+                                [(ngModel)]="currCustomer.username"
+                                required
+                                pInputText
+                                disabled
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            firstName.invalid &&
+                            (firstName.dirty || firstName.touched || submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                firstName.errors != null &&
+                                firstName.errors.required
+                            "
+                        >
+                            First Name is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="firstName"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                            >First Name</label
+                        >
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #firstName="ngModel"
+                                id="firstName"
+                                type="text"
+                                name="firstName"
+                                [(ngModel)]="currCustomer.firstName"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        *ngIf="
+                            lastName.invalid &&
+                            (lastName.dirty || lastName.touched || submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                lastName.errors != null &&
+                                lastName.errors.required
+                            "
+                        >
+                            Last Name is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="lastName"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                            >Last Name</label
+                        >
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #lastName="ngModel"
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                [(ngModel)]="currCustomer.lastName"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="
+                            email.invalid &&
+                            (email.dirty || email.touched || submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div
+                            *ngIf="
+                                email.errors != null && email.errors.required
+                            "
+                        >
+                            Email is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="email"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                            >Email</label
+                        >
+                        <div class="p-col-12 p-md-10">
+                            <input
+                                #email="ngModel"
+                                id="email"
+                                name="email"
+                                type="text"
+                                [(ngModel)]="currCustomer.email"
+                                required
+                                pInputText
+                            />
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="
+                            dob.invalid &&
+                            (dob.dirty || dob.touched || submitted)
+                        "
+                        class="errorText"
+                    >
+                        <div *ngIf="dob.errors != null && dob.errors.required">
+                            Date of Birth is required.
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label
+                            for="dob"
+                            class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+                            >Date of Birth</label
+                        >
+                        <div class="p-col-12 p-md-10">
+                            <p-calendar
+                                [(ngModel)]="currCustomer.dateOfBirth"
+                                [showIcon]="true"
+                                [monthNavigator]="true"
+                                [yearNavigator]="true"
+                                [yearRange]="yearRange"
+                                [maxDate]="maxDate"
+                                inputId="dob"
+                                name="dob"
+                                [required]="true"
+                                #dob="ngModel"
+                            ></p-calendar>
+                        </div>
+                    </div>
+                    <div class="p-grid p-jc-end">
+                        <div class="account-save-button">
+                            <span>
+                                <p-button label="Save" type="submit"></p-button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>My Orders</h2>
+        <p>View your orders</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="orders-container" *ngFor="let order of orders">
+            <p>Serial Number: {{ order.serialNumber }}</p>
+            <p>
+                Transaction Date:
+                {{ order.transactionDateTime | date: "dd/MM/yy" }}
+            </p>
+            <div *ngIf="order.paymentMethodEnum === 'CREDIT_CARD'; else cash">
+                <p>Payment Type: Credit Card</p>
+            </div>
+            <ng-template #cash>
+                <p>Payment Type: Cash on Delivery</p>
+            </ng-template>
+
+            <hr />
+
+            <div
+                class="orderItem"
+                *ngFor="let orderItem of order.orderItemEntities"
+            >
+                <div class="p-grid p-d-flex p-ai-center">
+                    <div class="p-col-2">
+                        <img
+                            src="http://localhost:8080/IceiumManagementSystem-war/productImages/{{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.imageLink
+                            }}"
+                            alt="{{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.name
+                            }}"
+                            class="p-mr-4"
+                        />
+                    </div>
+                    <div class="p-col-8">
+                        <h3>
+                            {{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.name
+                            }}
+                        </h3>
+                        <p>x{{ orderItem.quantity }}</p>
+                    </div>
+                    <div class="p-col-2 subTotal right">
+                        <p>${{ orderItem.subTotal | currency }}</p>
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+            <div class="right">
+                <p class="bigFont">
+                    Order Total: {{ order.totalAmount | currency }}
+                </p>
+                <p-button
+                    label="View Details"
+                    routerLink="/viewOrderItemDetails/{{ order.orderId }}"
+                    type="button"
+                >
+                </p-button>
+            </div>
+        </div>
+    </div>
+</div>

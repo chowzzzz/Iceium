@@ -1,0 +1,15 @@
+body {
+    font-family: "Noto Sans SC", "sans-serif";
+    font-size: 18px;
+}
+
+:host >>> .p-steps 
+            .p-steps-item 
+            .p-menuitem-link {
+    font-family: "Noto Sans SC", "sans-serif";
+    font-size: 18px;
+    background: transparent;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+}
+

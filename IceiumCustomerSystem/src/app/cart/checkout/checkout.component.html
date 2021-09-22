@@ -1,0 +1,15 @@
+<p-toast position="top-right"></p-toast>
+<form #orderForm="ngForm" (ngSubmit)="order(orderForm)"></form>
+<div class="cart-card">
+    <p-card 
+        [style]="{
+            width: '80vw',
+            padding: '0 0 1em',
+            margin: '2em auto'
+        }"
+        >
+        <p-steps [model]="items"></p-steps>
+
+        <router-outlet></router-outlet>
+    </p-card>
+</div>

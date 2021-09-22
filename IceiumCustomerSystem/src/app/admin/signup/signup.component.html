@@ -1,0 +1,279 @@
+<p-toast></p-toast>
+
+<div *ngIf="sessionService.getIsLogin() == false && !registered">
+    <div class="signup-container p-fluid">
+        <p-card
+            [style]="{
+                width: '30rem',
+                padding: '0 2em 1em',
+                margin: '2em auto'
+            }"
+        >
+            <ng-template pTemplate="header">
+                <img
+                    alt="Card"
+                    src="assets/images/logo_cut.png"
+                    class="signup-img"
+                />
+                <br />
+                <h2>Sign up</h2>
+            </ng-template>
+
+            <div *ngIf="signupError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+
+            <form
+                #createCustomerForm="ngForm"
+                (ngSubmit)="customerRegister(createCustomerForm)"
+            >
+                <div class="p-fluid p-grid signup-input">
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                username.invalid &&
+                                (username.dirty ||
+                                    username.touched ||
+                                    submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    username.errors != null &&
+                                    username.errors.required
+                                "
+                            >
+                                Username is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <input
+                                type="text"
+                                id="username"
+                                pInputText
+                                [(ngModel)]="newCustomer.username"
+                                name="username"
+                                required
+                                #username="ngModel"
+                            />
+                            <label for="username">Username</label>
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                password.invalid &&
+                                (password.dirty ||
+                                    password.touched ||
+                                    submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    password.errors != null &&
+                                    password.errors.required
+                                "
+                            >
+                                Password is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <input
+                                type="password"
+                                id="password"
+                                pInputText
+                                [(ngModel)]="newCustomer.password"
+                                name="password"
+                                #password="ngModel"
+                                required
+                            />
+                            <label for="password">Password</label>
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                firstName.invalid &&
+                                (firstName.dirty ||
+                                    firstName.touched ||
+                                    submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    firstName.errors != null &&
+                                    firstName.errors.required
+                                "
+                            >
+                                First Name is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <input
+                                type="text"
+                                id="firstName"
+                                pInputText
+                                [(ngModel)]="newCustomer.firstName"
+                                name="firstName"
+                                required
+                                #firstName="ngModel"
+                            />
+                            <label for="firstName">First Name</label>
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                lastName.invalid &&
+                                (lastName.dirty ||
+                                    lastName.touched ||
+                                    submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    lastName.errors != null &&
+                                    lastName.errors.required
+                                "
+                            >
+                                Last Name is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <input
+                                type="text"
+                                id="lastName"
+                                pInputText
+                                [(ngModel)]="newCustomer.lastName"
+                                name="lastName"
+                                required
+                                #lastName="ngModel"
+                            />
+                            <label for="lastName">Last Name</label>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                email.invalid &&
+                                (email.dirty || email.touched || submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    email.errors != null &&
+                                    email.errors.required
+                                "
+                            >
+                                Email is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <input
+                                type="email"
+                                id="email"
+                                pInputText
+                                [(ngModel)]="newCustomer.email"
+                                name="email"
+                                required
+                                #email="ngModel"
+                            />
+                            <label for="email">Email</label>
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12">
+                        <div
+                            *ngIf="
+                                dob.invalid &&
+                                (dob.dirty || dob.touched || submitted)
+                            "
+                            class="errorText"
+                        >
+                            <div
+                                *ngIf="
+                                    dob.errors != null && dob.errors.required
+                                "
+                            >
+                                Date of Birth is required.
+                            </div>
+                        </div>
+                        <span class="p-float-label">
+                            <p-calendar
+                                [(ngModel)]="newCustomer.dateOfBirth"
+                                [showIcon]="true"
+                                [monthNavigator]="true"
+                                [yearNavigator]="true"
+                                [yearRange]="yearRange"
+                                [maxDate]="maxDate"
+                                inputId="dob"
+                                name="dob"
+                                [required]="true"
+                                #dob="ngModel"
+                            ></p-calendar>
+                            <label for="dob">Date of Birth</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-field p-col-6 signup-button">
+                        <span>
+                            <p-button
+                                label="Clear"
+                                (onClick)="clear()"
+                            ></p-button>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-6 signup-button">
+                        <span>
+                            <p-button label="Sign Up" type="submit"></p-button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-card>
+    </div>
+</div>
+
+<div
+    *ngIf="sessionService.getIsLogin() == false && registered"
+    class="centered"
+>
+    <p-card [style]="{ width: '25rem', 'text-align': 'center' }">
+        <p>You have successfully signup!</p>
+        <ng-template pTemplate="footer" [style]="{ margin: '1rem 0' }">
+            <p-button
+                class="footer-button"
+                label="Proceed to login"
+                icon="pi pi-sign-in"
+                routerLink="/login"
+            ></p-button>
+        </ng-template>
+    </p-card>
+</div>
+
+<div *ngIf="sessionService.getIsLogin() == true" class="centered">
+    <p-card [style]="{ width: '25rem', 'text-align': 'center' }">
+        <p>
+            You are already signup as
+            {{ sessionService.getCurrentCustomer().firstName }}
+            {{ sessionService.getCurrentCustomer().lastName }}
+        </p>
+        <ng-template pTemplate="footer" [style]="{ margin: '1rem 0' }">
+            <p-button
+                class="footer-button"
+                label="Go back to Home page"
+                icon="pi pi-home"
+                routerLink="/index"
+            ></p-button>
+        </ng-template>
+    </p-card>
+</div>

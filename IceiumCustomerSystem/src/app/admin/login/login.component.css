@@ -1,0 +1,40 @@
+.login-container {
+    text-align: center;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-img {
+    width: 70%;
+    margin: 3em 0 0;
+}
+
+h2 {
+  margin: 1em 0 0;
+}
+
+.login-input span.username {
+    margin-bottom: 1.8em;
+}
+
+.login-input span {
+    margin: 0 2em;
+}
+
+.login-input input {
+    height: 3em;
+    width: inherit;
+}
+
+.login-button {
+    margin: 0 auto 0.5em;
+}
+
+p {
+  margin: 0;
+}

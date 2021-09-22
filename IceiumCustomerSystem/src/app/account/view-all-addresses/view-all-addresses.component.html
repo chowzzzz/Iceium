@@ -1,0 +1,140 @@
+<p-toast></p-toast>
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>My Addresses</h2>
+
+        <p>Manage your addresses</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="cc-container">
+            <div *ngIf="deleteAddressError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="right">
+                    <button
+                        pButton
+                        pRipple
+                        label="Add New Address"
+                        icon="pi pi-plus"
+                        class="p-button-success p-mr-2"
+                        routerLink="/addNewAddress"
+                    ></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="addresses" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="address">
+                            Address<p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="postalCode">
+                            Postal Code<p-sortIcon
+                                field="postalCode"
+                            ></p-sortIcon>
+                        </th>
+                        <th style="width: 10rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-address>
+                    <tr>
+                        <td>
+                            {{ address.address }}
+                        </td>
+                        <td>{{ address.postalCode }}</td>
+                        <td>
+                            <button
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-success p-mr-2"
+                                (click)="updateAddress(address)"
+                            ></button>
+                            <button
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-warning"
+                                (click)="deleteAddress(address)"
+                            ></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are
+                        {{ addresses ? addresses.length : 0 }} addresses.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-dialog
+    [(visible)]="addressDialog"
+    [style]="{ width: '450px' }"
+    header="Address Details"
+    [modal]="true"
+    styleClass="p-fluid"
+>
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="address">Address</label>
+            <input
+                type="text"
+                pInputText
+                id="address"
+                [(ngModel)]="address.address"
+                maxlength="256"
+                required
+                autofocus
+            />
+            <small class="p-error" *ngIf="submitted && !address?.address"
+                >Address is required.</small
+            >
+        </div>
+        <div class="p-field">
+            <label for="postalCode">Postal Code</label>
+            <input
+                type="text"
+                id="postalCode"
+                pInputText
+                [(ngModel)]="address.postalCode"
+                maxlength="7"
+                minlength="7"
+                placeholder="SXXXXXX"
+                required
+            />
+            <small class="p-error" *ngIf="submitted && !address?.postalCode"
+                >Postal Code is required.</small
+            >
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Cancel"
+            icon="pi pi-times"
+            class="p-button-text"
+            (click)="hideDialog()"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="Save"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="saveAddress()"
+        ></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

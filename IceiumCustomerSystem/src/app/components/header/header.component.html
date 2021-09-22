@@ -1,0 +1,61 @@
+<header>
+    <div>
+        <p-menubar [model]="items" styleClass="navbar">
+            <ng-template pTemplate="start">
+                <a href="#" routerLink="/">
+                    <img
+                        src="assets/images/logo_cut.png"
+                        height="60"
+                        class="p-mr-4"
+                    />
+                </a>
+            </ng-template>
+            <ng-template pTemplate="end">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input
+                        type="text"
+                        pInputText
+                        [(ngModel)]="searchValue"
+                        placeholder="Search"
+                        styleClass="search-bar"
+                        (keyup.enter)="doSearch()"
+                    />
+                </span>
+                <span class="p-ml-4">
+                    <button
+                        pButton
+                        type="button"
+                        icon="pi pi-shopping-cart"
+                        class="p-button-rounded p-button-text"
+                        routerLink="/cart"
+                    ></button>
+                </span>
+                <span class="p-ml-3">
+                    <span
+                        *ngIf="sessionService.getIsLogin() == false; else login"
+                    >
+                        <button
+                            pButton
+                            type="button"
+                            icon="pi pi-user"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="loginMenu.toggle($event)"
+                        ></button>
+                    </span>
+                    <ng-template #login>
+                        <button
+                            pButton
+                            type="button"
+                            [label]="userButton"
+                            icon="pi pi-user"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="loginMenu.toggle($event)"
+                        ></button>
+                    </ng-template>
+                </span>
+                <p-menu #loginMenu [popup]="true" [model]="loginItems"></p-menu>
+            </ng-template>
+        </p-menubar>
+    </div>
+</header>

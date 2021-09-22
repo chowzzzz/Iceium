@@ -1,0 +1,134 @@
+<p-toast></p-toast>
+
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>Order Details</h2>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="orders-container">
+            <div class="order-details">
+                <p>Serial Number: {{ order.serialNumber }}</p>
+                <p>
+                    Transaction Date:
+                    {{ order.transactionDateTime | date: "dd/MM/yy" }}
+                </p>
+                <div
+                    *ngIf="order.paymentMethodEnum === 'CREDIT_CARD'; else cash"
+                >
+                    <p>Payment Type: Credit Card</p>
+                </div>
+                <ng-template #cash>
+                    <p>Payment Type: Cash on Delivery</p>
+                </ng-template>
+
+                <p>
+                    Delivery Address:
+                    {{ order.addressEntity?.address }},
+                    {{ order.addressEntity?.postalCode }}
+                </p>
+            </div>
+
+            <hr />
+
+            <div class="orderItem" *ngFor="let orderItem of orderItems">
+                <div class="p-grid p-d-flex p-ai-center">
+                    <div class="p-col-2">
+                        <img
+                            src="http://localhost:8080/IceiumManagementSystem-war/productImages/{{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.imageLink
+                            }}"
+                            alt="{{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.name
+                            }}"
+                            class="p-mr-4"
+                        />
+                    </div>
+                    <div class="p-col-5">
+                        <h4>
+                            {{
+                                orderItem.specificationEntity?.productEntity
+                                    ?.name
+                            }}
+                        </h4>
+                        <p>x{{ orderItem.quantity }}</p>
+                        <p>
+                            Color:
+                            {{
+                                orderItem.specificationEntity?.colorEntity?.name
+                            }}
+                        </p>
+                        <p>
+                            Size:
+                            {{
+                                orderItem.specificationEntity?.sizeEntity?.size
+                            }}
+                        </p>
+                    </div>
+                    <div class="p-col-2">
+                        {{ orderItem.orderItemStatusEnum?.valueOf() }}
+                    </div>
+                    <div class="p-col-1">
+                        <div
+                            *ngIf="
+                                orderItem.orderItemStatusEnum?.valueOf() ===
+                                    'PENDING' ||
+                                    orderItem.orderItemStatusEnum?.valueOf() ===
+                                        'SHIPPED' ||
+                                    orderItem.orderItemStatusEnum?.valueOf() ===
+                                        'IN_DELIVERY' ||
+                                    orderItem.orderItemStatusEnum?.valueOf() ===
+                                        'DELIVERY_FAILED' ||
+                                    orderItem.orderItemStatusEnum?.valueOf() ===
+                                        'ORDER_CANCELLED';
+                                else blank
+                            "
+                        >
+                            <p-button
+                                label="Refund"
+                                (click)="refund(orderItem)"
+                                type="button"
+                            >
+                            </p-button>
+                        </div>
+                        <div
+                            *ngIf="
+                                orderItem.orderItemStatusEnum?.valueOf() ===
+                                    'DELIVERED';
+                                else blank
+                            "
+                        >
+                            <p-button
+                                label="Exchange"
+                                (click)="exchange(orderItem)"
+                                type="button"
+                            >
+                            </p-button>
+                        </div>
+                        <ng-template #blank> </ng-template>
+                    </div>
+                    <div class="p-col-2 subTotal right">
+                        ${{ orderItem.subTotal | currency }}
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+            <div class="right">
+                <p class="bigFont">
+                    Order Total: {{ order.totalAmount | currency }}
+                </p>
+                <p-button
+                    label="Back"
+                    routerLink="/viewAllOrders"
+                    type="button"
+                >
+                </p-button>
+            </div>
+        </div>
+    </div>
+</div>

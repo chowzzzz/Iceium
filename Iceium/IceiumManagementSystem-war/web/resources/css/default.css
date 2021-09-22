@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #333333;
+    overflow-x: hidden !important;
+}
+
+.center {
+    text-align: center;
+    margin: 0 auto; 
+}
+
+.loginPanel {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.loginPanel>tfoot>tr>td {
+    padding: 1.2em 0;
+}
+
+.loginPanel>tbody>tr>td {
+    text-align: left;
+    padding-bottom: 0.2em;
+}
+
+.loginPanel>tbody>tr>td>input {
+    width: 100%;
+    padding: 0.5em;
+}
+
+.right {
+    text-align: right;
+}
+
+.middle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inline {
+    display: inline-block;
+}
+
+.noBorder td {
+    border-style: hidden !important;
+}
+
+body .ui-datalist .ui-datalist-content {
+    border: 0px;
+}
+
+ul.ui-menu-child {
+    white-space: nowrap;
+    width: auto !important;
+}
+
+.ui-panelgrid.dialogPanelGrid {
+    min-width: 20vw;
+    margin: 1em 1.5em 2em;
+}
+
+.detailHeader {
+    float: left; 
+    font-weight: bold;
+}
+
+.detailContent {
+    float: left;
+    text-align: left;
+}
+
+.dialogDescription
+{
+    display: block;
+    height: 6em;
+    overflow: auto;
+}
+
+.grid-checkbox
+{
+    color: #FFFFFF;
+}
+
+body .ui-menu {
+    background: inherit;
+    border: none;
+    width: 99vw;
+}
+
+body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem:nth-child(2) {
+    margin-left: auto;
+}
+
+body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem {
+    margin-right: 0.5em;
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link.ui-state-hover.logo {
+    background-color: inherit!important;
+}
+
+.ui-menu-list {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    margin: 1em 2em;
+}
+
+h2, h3 {
+    padding: 0 0 0.8em;
+}
+
+.flexBox {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em 0;
+}
+
+.ui-button.homeBtns {
+    width: 15em; 
+    padding: 1.5em 0; 
+    margin: 0 1.5em 1.5em 0;
+}
+
+.chartCard {
+    transform:scale(0.9);
+    padding: 1em;
+    width: 95vw;
+    border-radius:10px;
+    border: 1px solid #EAEAEA;
+    box-shadow: 0 25px 30px -20px #00000010; 
+    box-shadow: 0px 25px 30px -20px rgba(0, 0, 0, 0.0959934);
+    background: #FFFAFA;    
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#errorHeadMessage {
+    font-size: 10em;
+    font-weight: bold;
+    color: #10B374;
+}
+
+#errorDetailMessage {
+    font-size: 3em;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+#errorAccessMessage {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #E5ECF4;
+}
+

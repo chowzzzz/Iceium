@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateSale" widgetVar="dialogUpdateSale" header="Update Sale" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateSale">
+
+                <p:messages id="messages" redisplay="false" />
+
+                <p:panelGrid style="float: left; max-width: 40em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="saleId" value="ID: "/></p:column>
+                        <p:column>
+                            <p:inputText style="width: 18em;" id="saleId" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.saleId}" required="true" requiredMessage="Sale ID is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="discountRate" value="Discount Rate: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="discountRate" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.discountRate}" symbol="%" symbolPosition="s" emptyValue="0.00" minValue="0.00" maxValue="100.00" required="true" requiredMessage="Discount Rate is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="description" value="Description: "/></p:column>
+                        <p:column><p:inputText style="width: 18em;" id="description" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.description}" placeholder="Description" required="true" requiredMessage="Description is required" /></p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="startDate" value="Start Date: "/></p:column>
+                        <p:column>
+                            <p:datePicker inputStyle="width: 18em;" id="startDate" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.startDateTime}" placeholder="#{promotionManagementManagedBean.minDateString}" mindate="#{promotionManagementManagedBean.minDate}" showButtonBar="true" monthNavigator="true" yearNavigator="true" showTime="true" required="true" requiredMessage="Start Date is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="endDate" value="End Date: "/></p:column>
+                        <p:column>
+                            <p:datePicker inputStyle="width: 18em;" id="endDate" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.endDateTime}" placeholder="#{promotionManagementManagedBean.minDateString}" mindate="#{promotionManagementManagedBean.minDate}" showButtonBar="true" monthNavigator="true" yearNavigator="true" showTime="true" required="true" requiredMessage="End Date is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="currentRedemptions" value="Current Redemptions: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="currentRedemptions" value="#{promotionManagementManagedBean.selectedSaleEntityToUpdate.currentRedemptions}" decimalPlaces="0" emptyValue="0" minValue="0" required="true" requiredMessage="Current Redemptions is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" style="text-align: center;">
+                            <p:commandButton value="Update Sale" update="@form promotionsTabView:ccViewAllSales:formAllSales:dataTableAllSales" actionListener="#{promotionManagementManagedBean.updateSale}" oncomplete="PF('dialogUpdateSale').show();" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

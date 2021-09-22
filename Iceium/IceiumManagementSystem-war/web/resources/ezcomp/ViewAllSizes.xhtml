@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:form id="formAllSizes">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllSizes" 
+                         widgetVar="dataTableAllSizes" 
+                         value="#{miscellaneousManagedBean.sizeEntities}" 
+                         var="sizeEntity" 
+                         rowKey="#{sizeEntity.sizeId}" 
+                         rowIndexVar="row"                      
+                         filteredValue="#{miscellaneousManagedBean.filteredSizeEntities}"
+                         rows="5" 
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         rowsPerPageTemplate="5,10,20,50,{ShowAll|'All'}">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllSizes').filter()" style="width:20em" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="ID" sortBy="#{sizeEntity.sizeId}" filterBy="#{sizeEntity.sizeId}" filterMatchMode="exact">
+                    <h:outputText value="#{sizeEntity.sizeId}" />
+                </p:column>
+
+                <p:column headerText="Size" sortBy="#{sizeEntity.size}" filterBy="#{sizeEntity.size}" filterMatchMode="contains">
+                    <h:outputText value="#{sizeEntity.size}" />
+                </p:column>                   
+
+                <p:column headerText="Type" sortBy="#{sizeEntity.sizeTypeEnum}" filterBy="#{sizeEntity.sizeTypeEnum}" filterMatchMode="contains">
+                    <h:outputText value="#{sizeEntity.sizeTypeEnum}" />
+                </p:column>         
+
+                <p:column headerText="Code" sortBy="#{sizeEntity.code}" filterBy="#{sizeEntity.code}" filterMatchMode="contains">
+                    <h:outputText value="#{sizeEntity.code}" />
+                </p:column>     
+
+                <p:column headerText="Action" style="text-align: center;">
+                    <p:commandButton icon="pi pi-pencil" actionListener="#{miscellaneousManagedBean.doUpdateSize}" update="ccUpdateSize:dialogUpdateSize" oncomplete="PF('dialogUpdateSize').show()">
+                        <f:attribute name="sizeEntityToUpdate" value="#{sizeEntity}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pi pi-trash" actionListener="#{miscellaneousManagedBean.deleteSize}" update="@form:dataTableAllSizes @form:messages">
+                        <f:attribute name="sizeEntityToDelete" value="#{sizeEntity}" />
+                        <p:confirm header="Confirmation" message="Are you sure you want to delete #{sizeEntity.size} (Size Type: #{sizeEntity.sizeTypeEnum})?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:columnGroup type="footer">   
+                    <p:row>
+                        <p:column colspan="5" footerText="#{miscellaneousManagedBean.sizeEntities.size()} sizes" />
+                    </p:row>
+                </p:columnGroup>
+
+            </p:dataTable>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
+
+        </h:form>
+
+    </cc:implementation>
+</html>

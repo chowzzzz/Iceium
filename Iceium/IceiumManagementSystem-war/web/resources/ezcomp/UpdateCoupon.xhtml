@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog id="dialogUpdateCoupon" widgetVar="dialogUpdateCoupon" header="Update Coupon" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formUpdateCoupon">
+
+                <p:messages id="messages" redisplay="false" />
+
+                <p:panelGrid style="float: left; max-width: 40em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="couponId" value="ID: "/></p:column>
+                        <p:column>
+                            <p:inputText style="width: 18em;" id="couponId" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.couponId}" required="true" requiredMessage="Coupon ID is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="couponCode" value="Coupon Code: "/></p:column>
+                        <p:column>
+                            <p:inputText style="width: 18em;" id="couponCode" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.couponCode}" required="true" requiredMessage="Coupon Code is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="discountRate" value="Discount Rate: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="discountRate" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.discountRate}" symbol="%" symbolPosition="s" emptyValue="0.00" minValue="0.00" maxValue="100.00" required="true" requiredMessage="Discount Rate is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="description" value="Description: "/></p:column>
+                        <p:column><p:inputText style="width: 18em;" id="description" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.description}" placeholder="Description" required="true" requiredMessage="Description is required" /></p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="startDate" value="Start Date: "/></p:column>
+                        <p:column>
+                            <p:datePicker inputStyle="width: 18em;" id="startDate" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.startDateTime}" placeholder="#{promotionManagementManagedBean.minDateString}" mindate="#{promotionManagementManagedBean.minDate}" showButtonBar="true" monthNavigator="true" yearNavigator="true" showTime="true" required="true" requiredMessage="Start Date is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="endDate" value="End Date: "/></p:column>
+                        <p:column>
+                            <p:datePicker inputStyle="width: 18em;" id="endDate" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.endDateTime}" placeholder="#{promotionManagementManagedBean.minDateString}" mindate="#{promotionManagementManagedBean.minDate}" showButtonBar="true" monthNavigator="true" yearNavigator="true" showTime="true" required="true" requiredMessage="End Date is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="minimumSpend" value="Minimum Spend: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="minimumSpend" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.minimumSpend}" symbol="$" emptyValue="0.00" minValue="0.00" required="true" requiredMessage="Minimum Spend is required" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="currentRedemptions" value="Current Redemptions: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="currentRedemptions" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.currentRedemptions}" decimalPlaces="0" emptyValue="0" minValue="0" required="true" requiredMessage="Current Redemptions is required" disabled="true" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 15em;"><p:outputLabel style="font-weight: bold;" for="maximumRedemptions" value="Max Redemptions: "/></p:column>
+                        <p:column>
+                            <p:inputNumber inputStyle="width: 18em;" id="maximumRedemptions" value="#{promotionManagementManagedBean.selectedCouponEntityToUpdate.maximumRedemptions}" decimalPlaces="0" emptyValue="0" minValue="0" required="true" requiredMessage="Maximum Redemptions is required" />
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" style="text-align: center;">
+                            <p:commandButton value="Update Coupon" update="@form promotionsTabView:ccViewAllCoupons:formAllCoupons:dataTableAllCoupons" actionListener="#{promotionManagementManagedBean.updateCoupon}" oncomplete="PF('dialogUpdateCoupon').show();" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

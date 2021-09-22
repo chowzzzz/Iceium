@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog id="dialogViewOrder" widgetVar="dialogViewOrder" header="View Order" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formViewOrder">
+
+                <p:panelGrid style="float: left; width: 30em" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                        <p:column rowspan="8">
+                            <p:graphicImage library="images" name="order.png" />                            
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel style="width: 10em;" for="orderId" styleClass="detailHeader" value="ID" /></p:column>
+                        <p:column><h:outputText id="orderId" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.orderId}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="serialNumber" styleClass="detailHeader" value="Serial Number" /></p:column>
+                        <p:column><h:outputText id="serialNumber" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.serialNumber}" /></p:column>
+                    </p:row>
+
+                    <p:row>                    
+                        <p:column><p:outputLabel for="totalOrderItem" styleClass="detailHeader" value="Total Order Item" /></p:column>
+                        <p:column><h:outputText id="totalOrderItem" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.totalOrderItem}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="totalQuantity" styleClass="detailHeader" value="Total Quantity" /></p:column>
+                        <p:column><h:outputText id="totalQuantity" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.totalQuantity}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="totalAmount" styleClass="detailHeader" value="Total Amount" /></p:column>
+                        <p:column>
+                            <h:outputText id="totalAmount" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.totalAmount}">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                            </h:outputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="transactionDateTime" styleClass="detailHeader" value="Transaction Date Time" /></p:column>
+                        <p:column>
+                            <h:outputText id="transactionDateTime" styleClass="detailContent" value="#{viewOrderManagedBean.orderEntityToView.transactionDateTime}">
+                                <f:convertDateTime type="localDateTime" />
+                            </h:outputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="deliveryAddress" styleClass="detailHeader" value="Delivery Address" /></p:column>
+                        <p:column><h:outputText id="deliveryAddress" styleClass="detailContent" value="${viewOrderManagedBean.orderEntityToView.addressEntity.fullAddress}" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="paymentMethod" styleClass="detailHeader" value="Payment Method" /></p:column>
+                        <p:column><h:outputText id="paymentMethod" styleClass="detailContent" value="${viewOrderManagedBean.orderEntityToView.paymentMethodEnum.printName}" /></p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+</html>

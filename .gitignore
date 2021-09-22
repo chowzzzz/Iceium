@@ -1,0 +1,55 @@
+# VIM backups
+*.swp
+*.un~
+*.~
+.gitignore~
+
+# DS Store
+.DS_Store
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+# *.jar
+# *.war
+# *.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# User defined
+nbproject/private/
+build/
+dist/
+
+.tmp
+/Iceium/nbproject/private/
+/Iceium/nbproject/ant-deploy.xml
+/Iceium/nbproject/build-impl.xml
+/Iceium/nbproject/genfiles.properties
+
+/Iceium/Iceium-ejb/nbproject/private/
+/Iceium/Iceium-ejb/nbproject/ant-deploy.xml
+/Iceium/Iceium-ejb/nbproject/build-impl.xml
+/Iceium/Iceium-ejb/nbproject/genfiles.properties
+
+/Iceium/IceiumManagementSystem-war/nbproject/private/
+/Iceium/IceiumManagementSystem-war/nbproject/ant-deploy.xml
+/Iceium/IceiumManagementSystem-war/nbproject/build-impl.xml
+/Iceium/IceiumManagementSystem-war/nbproject/genfiles.properties
+/Iceium/IceiumManagementSystem-war/web/WEB-INF/glassfish-web.xml
+/Iceium/IceiumManagementSystem-war/web/WEB-INF/web.xml
+
+/IceiumCustomerSystem/package-lock.json
+/Iceium/IceiumRws/nbproject/private/

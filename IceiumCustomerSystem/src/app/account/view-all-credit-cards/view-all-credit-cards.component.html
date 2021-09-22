@@ -1,0 +1,74 @@
+<p-toast></p-toast>
+<div class="account-container p-grid">
+    <app-account-menu class="p-col"></app-account-menu>
+
+    <div class="p-md-9 p-col-10 account-card">
+        <h2>My Credit Cards</h2>
+
+        <p>Manage your credit cards</p>
+
+        <hr style="opacity: 0.1" />
+
+        <div class="cc-container">
+            <div *ngIf="deleteCreditCardError == true" class="errorMsg">
+                {{ errorMessage }}
+            </div>
+
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="right">
+                    <button
+                        pButton
+                        pRipple
+                        label="Add New Credit Card"
+                        icon="pi pi-plus"
+                        class="p-button-success p-mr-2"
+                        routerLink="/addNewCreditCard"
+                    ></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="creditCards" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="creditCardNumber">
+                            Credit Card Number<p-sortIcon
+                                field="creditCardNumber"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nameOnCard">
+                            Name On Card<p-sortIcon
+                                field="nameOnCard"
+                            ></p-sortIcon>
+                        </th>
+                        <th style="width: 5rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-creditCard>
+                    <tr>
+                        <td>
+                            {{ creditCard.creditCardNumber }}
+                        </td>
+                        <td>{{ creditCard.nameOnCard }}</td>
+                        <td>
+                            <button
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-warning"
+                                (click)="deleteCreditCard(creditCard)"
+                            ></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are
+                        {{ creditCards ? creditCards.length : 0 }} credit cards.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"                
+                xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/defaultTemplate.xhtml">
+    
+    <ui:define name="content">
+
+        <h:panelGroup id="loginPage" rendered="#{sessionScope.isLogin == false}">
+            <p:messages id="messages" redisplay="false" closable="true" />
+            <div class="center middle">
+
+                <p:graphicImage library="images" name="logo_cut_smaller.png" alt="Logo" style="width: 300px; margin-bottom: 2em" />
+                <h:form>
+                    <h:panelGrid styleClass="loginPanel">
+                        <p:outputLabel style="font-weight: bold; color: white;" for="txtUsername" value="Username" />
+                        <p:inputText id="txtUsername" type="text" value="#{loginManagedBean.username}" />
+
+                        <p:outputLabel style="font-weight: bold; color: white;" for="txtPassword" value="Password" />
+                        <p:inputText id="txtPassword" type="password" value="#{loginManagedBean.password}" />
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Login" update=":loginPage" actionListener="#{loginManagedBean.login(event)}" style="width: 100%; padding: 0.3em;" />
+                        </f:facet>
+                    </h:panelGrid>
+
+                </h:form>
+            </div>           
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{sessionScope.isLogin == true}">
+            <div class="container">
+                <h3>Admin console</h3>
+                <h2>Welcome #{sessionScope.currentStaffEntity.firstName} #{sessionScope.currentStaffEntity.lastName}, what would you like to do today?</h2>
+
+                <div class="flexBox">
+                    <p:button value="Staff Management" outcome="/staffManagement" icon="pi pi-user" styleClass="homeBtns"/>
+                    <p:button value="Product Management" outcome="/productManagement" icon="pi pi-tags" styleClass="homeBtns"/>
+                    <p:button value="Order Management" outcome="/orderManagement" icon="pi pi-copy" styleClass="homeBtns"/>
+                    <p:button value="Customer Management" outcome="/customerManagement" icon="pi pi-users" styleClass="homeBtns"/>
+                    <p:button value="Promotion Management" outcome="/promotionManagement" icon="pi pi-tag" styleClass="homeBtns"/>
+                    <p:button value="Miscellaneous" outcome="/miscellaneous" icon="pi pi-tag" styleClass="homeBtns"/>
+                </div>
+                
+                <h:form>
+                    
+                    <p:menubar>
+                        <p:submenu label="Print Reports" icon="pi pi-fw pi-file">
+                            <p:menuitem value="Customer" oncomplete="PF('dialogPrintCustomerReport').show()" icon="pi pi-fw pi-users"/>
+                            <p:menuitem value="Sales" oncomplete="PF('dialogPrintSalesReport').show()" icon="pi pi-fw pi-chart-line"/>
+                            <p:menuitem value="Staff" oncomplete="PF('dialogPrintStaffReport').show()" icon="pi pi-fw pi-id-card"/>
+                        </p:submenu>
+                    </p:menubar>
+                    
+                </h:form>
+
+                <div class="chartCard">
+                    <p:lineChart model="#{indexManagedBean.salesLineModel}" />
+                </div>
+                <div class="chartCard">
+                    <p:barChart model="#{indexManagedBean.ordersStackedGroupModel}" />
+                </div>
+                <div class="chartCard">
+                    <p:pieChart model="#{indexManagedBean.orderFulfilmentPieModel}" />
+                </div>
+                <div class="chartCard">
+                    <p:donutChart model="#{indexManagedBean.customerAgesDonutModel}" />
+                </div>
+            </div>
+        </h:panelGroup>
+
+        <ez:PrintCustomerReport id="ccPrintCustomerReport" />
+        <ez:PrintSalesReport id="ccPrintSalesReport" />
+        <ez:PrintStaffReport id="ccPrintStaffReport" />
+        
+    </ui:define>
+
+</ui:composition>

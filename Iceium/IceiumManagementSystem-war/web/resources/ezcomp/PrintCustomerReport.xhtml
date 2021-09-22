@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:dialog id="dialogPrintCustomerReport" widgetVar="dialogPrintCustomerReport" header="Print Customer Report" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false" closable="true" closeOnEscape="true">
+
+            <h:form id="formPrintCustomerReport">
+
+                <!--<p:messages id="messages" redisplay="false" closable="true" />-->
+
+                <p:panelGrid style="width: 30em;" styleClass="noBorder">
+
+                    <p:row>
+                        <p:column><p:outputLabel for="lowerBound" styleClass="detailHeader" value="Lower Bound: " /></p:column>
+                        <p:column>
+                            <p:inputText id="lowerBound" value="#{indexManagedBean.lowerBound}">
+                                <f:convertNumber type="currency" currencyCode="SGD" currencySymbol="$" maxFractionDigits="2"  />
+                            </p:inputText>
+                        </p:column>
+                        <p:column><p:outputLabel for="upperBound" styleClass="detailHeader" value="Upper Bound: " /></p:column>
+                        <p:column>
+                            <p:inputText id="upperBound" value="#{indexManagedBean.upperBound}">
+                                <f:convertNumber type="currency" currencyCode="SGD" currencySymbol="$" maxFractionDigits="2"  />
+                            </p:inputText>
+                        </p:column>
+                    </p:row>                    
+                    <p:row>
+                        <p:column colspan="2"><p:outputLabel for="isEnabled" styleClass="detailHeader" value="Enabled Status: " /></p:column>
+                        <p:column colspan="2">
+                            <p:selectOneButton id="isEnabled" value="#{indexManagedBean.enabledStatus}">
+                                <f:selectItems value="#{indexManagedBean.enabledStatuses}" />
+                            </p:selectOneButton>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">
+                            <p:separator />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">
+                            <div style="text-align: center;">
+                                <p:commandButton value="Print Customer Report" update="@form" process="@form" actionListener="#{indexManagedBean.generateCustomerReport()}" ajax="false" icon="pi pi-arrow-down" oncomplete="PF('dialogPrintCustomerReport').show()" />
+                            </div>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </cc:implementation>
+
+</html>

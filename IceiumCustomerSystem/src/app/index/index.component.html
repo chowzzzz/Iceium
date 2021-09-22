@@ -1,0 +1,82 @@
+<div>
+    <div class="banner-container">
+        <div class="banner p-grid vertical-container">
+            <div class="banner-title p-col-7 p-as-center">
+                <h1>Customizable Ice Skates</h1>
+                <p>
+                    Be it figure skates, hockey skates or speed skates, we have
+                    you all covered with our very own customizable ice skates.
+                    You can pick you favourite color and ideal ice blade types
+                    from our wide range of selection.
+                </p>
+
+                <p-button
+                    label="Customize Now"
+                    routerLink="/customizeProduct"
+                    styleClass="p-button-lg"
+                >
+                </p-button>
+            </div>
+            <div class="banner-img p-col-5">
+                <img
+                    src="assets/images/iceskates.jpg"
+                    alt="Iceium Skates"
+                    width="100%"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="index-container">
+        <p-carousel
+            [value]="categories"
+            [numVisible]="8"
+            [numScroll]="7"
+            [circular]="false"
+        >
+            <ng-template pTemplate="header">
+                <h2>Shop by Categories</h2>
+            </ng-template>
+            <ng-template let-category pTemplate="item">
+                <div class="category-item index-list">
+                    <p-button
+                        class="p-shadow-6"
+                        (onClick)="viewProductsCategory(category.categoryId)"
+                        >{{ category.name }}</p-button
+                    >
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+
+    <div class="index-container">
+        <p-carousel
+            [value]="brands"
+            [numVisible]="8"
+            [numScroll]="7"
+            [circular]="false"
+        >
+            <ng-template pTemplate="header">
+                <h2>Shop by Brands</h2>
+            </ng-template>
+            <ng-template let-brand pTemplate="item">
+                <div class="brand-item index-list">
+                    <p-button
+                        class="p-shadow-6"
+                        (onClick)="viewProductsBrand(brand.name)"
+                        >{{ brand.name }}</p-button
+                    >
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+
+    <app-carousel-product
+        [products]="hotProducts"
+        [productType]="hotProduct"
+    ></app-carousel-product>
+    <app-carousel-product
+        [products]="newProducts"
+        [productType]="newProduct"
+    ></app-carousel-product>
+</div>

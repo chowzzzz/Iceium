@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/defaultTemplate.xhtml">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:form id="formAllStaffs">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllStaffs" 
+                         widgetVar="dataTableAllStaffs" 
+                         value="#{staffManagementManagedBean.staffEntities}" 
+                         var="staffEntity" 
+                         rowKey="#{staffEntity.staffId}" 
+                         rowIndexVar="row"
+                         selection="#{staffManagementManagedBean.viewStaffManagedBean.staffEntityToView}"                             
+                         selectionMode="single"
+                         filteredValue="#{staffManagementManagedBean.filteredStaffEntities}"
+                         rows="5" 
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         rowsPerPageTemplate="5,10,20,50,{ShowAll|'All'}">
+
+                <p:ajax event="rowDblselect" update="ccViewStaff:dialogViewStaff" global="false" oncomplete="PF('dialogViewStaff').show()"/>
+
+                <f:facet name="header">
+                    <div style="text-align: right;">
+                        <h:outputText value="Search all fields: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllStaffs').filter()" style="width:20em" placeholder="Enter keyword"/>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="ID" sortBy="#{staffEntity.staffId}">
+                    <h:outputText value="#{staffEntity.staffId}" />
+                </p:column>
+
+                <p:column headerText="First Name" sortBy="#{staffEntity.firstName}" filterBy="#{staffEntity.firstName}" filterMatchMode="contains">
+                    <h:outputText value="#{staffEntity.firstName}" />
+                </p:column>         
+
+                <p:column headerText="Last Name" sortBy="#{staffEntity.lastName}" filterBy="#{staffEntity.lastName}" filterMatchMode="contains">
+                    <h:outputText value="#{staffEntity.lastName}" />
+                </p:column>
+
+                <p:column headerText="Staff Role" sortBy="#{staffEntity.accessRightEnum.printName}" filterBy="#{staffEntity.accessRightEnum.printName}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu id="selAccessRight" onchange="PF('dataTableAllStaffs').filter()">
+                            <f:selectItem itemValue="#{null}" itemLabel="All" noSelectionOption="true" />
+                            <f:selectItems value="#{staffManagementManagedBean.accessRightEnums}" var="accessRightEnum" itemValue="#{accessRightEnum.printName}" itemLabel="#{accessRightEnum.printName}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{staffEntity.accessRightEnum.printName}" />
+                </p:column>
+
+                <p:column headerText="Action" style="text-align: center;">
+                    <p:commandButton actionListener="#{staffManagementManagedBean.doUpdateStaff}" update="@composite:@next:@next:dialogUpdateStaff" oncomplete="PF('dialogUpdateStaff').show()" icon="pi pi-pencil" title="Update">
+                        <f:attribute name="staffEntityToUpdate" value="#{staffEntity}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pi pi-trash" actionListener="#{staffManagementManagedBean.deleteStaff}" update="@form:dataTableAllStaffs @form:messages">
+                        <f:attribute name="staffEntityToDelete" value="#{staffEntity}" />
+                        <p:confirm header="Confirmation" message="Are you sure you want to delete #{staffEntity.firstName} #{staffEntity.lastName} (Staff ID: #{staffEntity.staffId})?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:columnGroup type="footer">   
+                    <p:row>
+                        <p:column colspan="5" footerText="#{staffManagementManagedBean.staffEntities.size()} staffs" />
+                    </p:row>
+                </p:columnGroup>
+                
+            </p:dataTable>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
+
+        </h:form>
+
+    </cc:implementation>
+</html>

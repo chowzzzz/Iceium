@@ -1,0 +1,159 @@
+<p-toast position="top-right"></p-toast>
+<div class="product-card">
+    <div class="product-container p-grid">
+        <div class="p-col-12 p-mb-4">
+            <div class="p-grid">
+                <div class="p-col-4 img-box">
+                    <img
+                        src="http://localhost:8080/IceiumManagementSystem-war/productImages/{{
+                            productToView.imageLink
+                        }}"
+                        [alt]="productToView.name"
+                        class="product-img"
+                    />
+                </div>
+                <div class="p-col-7">
+                    <h1>
+                        {{ productToView.name }}
+                    </h1>
+                    <h3 class="p-mb-2">
+                        <div *ngIf="!productToView.saleEntity">
+                            {{ productToView.unitPrice | currency }}
+                        </div>
+                        <div *ngIf="productToView.saleEntity"> 
+                            <span class="original-price">{{ productToView.unitPrice | currency }}</span>
+                            &nbsp;
+                            <span>{{ getDiscountedUnitPrice(productToView) | currency }}</span>
+                        </div>
+                    </h3>
+                    <div class="p-d-flex">
+                        <p-rating
+                            [ngModel]="productToView.rating"
+                            [readonly]="true"
+                            [cancel]="false"
+                            class="p-mr-2"
+                        ></p-rating>
+
+                        <span>{{ productToView.rating }}</span>
+                    </div>
+
+                    <p-divider></p-divider>
+
+                    <form
+                        #addToCartForm="ngForm"
+                        (ngSubmit)="addToCart(addToCartForm)"
+                    >
+                        <div *ngIf="haveSize">
+                            <div class="p-d-flex p-ai-center">
+                                <p class="p-mr-3 label">Size</p>
+                                <p-dropdown
+                                    [options]="sizesAvailable"
+                                    name="selectedSize"
+                                    [(ngModel)]="selectedSize"
+                                    optionLabel="size"
+                                    styleClass="dropdown"
+                                >
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="p-d-flex p-ai-center">
+                            <p class="p-mr-3 label">Color</p>
+                            <p-dropdown
+                                [options]="colorsAvailable"
+                                name="selectedColor"
+                                [(ngModel)]="selectedColor"
+                                optionLabel="name"
+                                styleClass="dropdown"
+                                class="p-mr-2"
+                            >
+                            </p-dropdown>
+                            <app-color-picker
+                                [color]="selectedColor"
+                            ></app-color-picker>
+                        </div>
+
+                        <p-divider></p-divider>
+
+                        <div class="p-mb-2">
+                            <p-button type="submit" label="Add To Cart"></p-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-col-12">
+            <p-tabView>
+                <p-tabPanel header="Description">
+                    <div class="description-container">
+                        <h3>{{ productToView.name }}</h3>
+                        <p>{{ productToView.description }}</p>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Specification">
+                    <div class="specification-container">
+                        <table class="specification-table">
+                            <tr>
+                                <th>Product SKU Code:</th>
+                                <td>{{ productToView.skuCode }}</td>
+                            </tr>
+                            <tr>
+                                <th>Name:</th>
+                                <td>{{ productToView.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Brand:</th>
+                                <td>
+                                    {{
+                                        productToView.modelEntity?.brandEntity?.name
+                                    }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Model:</th>
+                                <td>{{ productToView.modelEntity?.name }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Reviews" class="reviews-container">
+                    <div
+                        *ngFor="
+                            let specification of productToView.specificationEntities
+                        "
+                    >
+                        <div
+                            *ngFor="
+                                let orderItem of specification.orderItemEntities
+                            "
+                        >
+                            <div
+                                *ngIf="orderItem.reviewEntity"
+                                class="review-container"
+                            >
+                                <div class="p-d-flex p-jc-between">
+                                    <p-rating
+                                        [ngModel]="orderItem.reviewEntity.rating"
+                                        [readonly]="true"
+                                        [cancel]="false"
+                                    ></p-rating>
+                                    <span>
+                                        Date:
+                                        {{
+                                            orderItem.reviewEntity.dateOfReview
+                                                | date: "dd/MM/yy"
+                                        }}
+                                    </span>
+                                </div>
+                                <p>
+                                    {{ orderItem.reviewEntity.review }}
+                                </p>
+                                <p-divider></p-divider>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</div>

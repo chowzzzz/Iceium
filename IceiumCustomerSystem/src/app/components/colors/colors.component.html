@@ -1,0 +1,192 @@
+<div class="colors p-d-flex p-flex-wrap">
+    <div class="color-container" *ngFor="let color of colors">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            [style.background-color]="color?.hex"
+            [attr.data-color]="color?.hex"
+            [pTooltip]="color.name!"
+            (click)="changeColor($event, color)"
+        ></div>
+    </div>
+    <!-- <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: pink"
+            data-color="pink"
+            pTooltip="Pink"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: lightcoral"
+            data-color="lightcoral"
+            pTooltip="Coral"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: crimson"
+            data-color="crimson"
+            pTooltip="Red"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: darkred"
+            data-color="darkred"
+            pTooltip="Maroon"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: lightsalmon"
+            data-color="salmon"
+            pTooltip="Salmon"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: tomato"
+            data-color="tomato"
+            pTooltip="Salmon"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: darkorange"
+            data-color="orange"
+            pTooltip="Orange"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: gold"
+            data-color="gold"
+            pTooltip="Yellow"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: lemonchiffon"
+            data-color="lemonchiffon"
+            pTooltip="Light Yellow"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: khaki"
+            data-color="khaki"
+            pTooltip="Khaki"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: darkseagreen"
+            data-color="darkseagreen"
+            pTooltip="Sea Green"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: lightgreen"
+            data-color="lightgreen"
+            pTooltip="Green"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: teal"
+            data-color="teal"
+            pTooltip="Teal"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: midnightblue"
+            data-color="midnightblue"
+            pTooltip="Navy"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: steelblue"
+            data-color="steelblue"
+            pTooltip="SteelBlue"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: skyblue"
+            data-color="skyblue"
+            pTooltip="SkyBlue"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: mediumpurple"
+            data-color="mediumpurple"
+            pTooltip="Purple"
+            (click)="changeColor($event)"
+        ></div>
+    </div>
+    <div class="color-container">
+        <div
+            class="color"
+            [ngClass]="{ active: isActive }"
+            style="background-color: darkmagenta"
+            data-color="darkmagenta"
+            pTooltip="Magenta"
+            (click)="changeColor($event)"
+        ></div>
+    </div> -->
+</div>
